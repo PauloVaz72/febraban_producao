@@ -16,7 +16,7 @@
 
     // Passando por parâmetro cod do convênio
     $convenio = $_GET['convenio'];
-   
+    
     // Gera parcelas
     while ($dia >= 1)
     {
@@ -57,6 +57,6 @@
             $dia+= -1;
     }
 
-      //    header("Location: index_santander.php");
+      // header("Location: index_santander.php");
 
     ?>

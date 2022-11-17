@@ -17,47 +17,68 @@
     // Passando por parâmetro cod do convênio
     $convenio = $_GET['convenio'];
 
-    // Gera parcelas
-    while ($dia >= 1)
+    if(isset($_GET['convenio']))
     {
-            // Consulta negócio pelo dia da data informada
-            $sql = "SELECT * FROM `negocios` WHERE dia_debito = $dia AND status_negocio = 1";          
-            $res = $connection->query($sql);
-            
-            while($row = $res->fetch_object())
-            {   
-                $data_original =  date('Ymd', strtotime($row->dia_debito. '-' .substr($_GET['data'],5,2). '-' . substr($_GET['data'],0,4)));
+        // Busca os dados do convenio
+        $sql = "SELECT * , bancos.nome_banco, bancos.codigo_febraban, convenios_debito_em_conta.banco_id
+        FROM convenios_debito_em_conta 
+        INNER JOIN bancos
+        ON bancos.id = convenios_debito_em_conta.banco_id	
+        WHERE `cod_convenio` = ".$convenio;
+        $res = $connection->query($sql);
+        $row = $res->fetch_object();
+        $cod_banco = $row->codigo_febraban;
+        $convenio = $row->cod_convenio;
+        
+        if($cod_banco == 104)
+        {
+            // Gera parcelas
+            while ($dia >= 1)
+            {
+                // Consulta negócio pelo dia da data informada
+                // $sql = "SELECT * FROM `negocios` WHERE dia_debito = $dia AND status_negocio = 1";          
+                // $res = $connection->query($sql);
                 
-                // Gera apenas parcelas aonde minha data original (dia + mês + ano) seja maior ou igual a minha data de venda de negócios, evitando cobrança retroativa 
-                if($data_original >= $row->data_venda)
-                { 
-                    // Se possui meu negocio ele busca na data de vencimento informada
-                    $sql = "SELECT id FROM negocio_parcelas WHERE negocio_id = $row->id AND vencimento_original = '$data_original'";
-                    $res2 = $connection->query($sql);
+                $sql = "SELECT";
+                
+                while($row = $res->fetch_object())
+                {   
+                    $data_original =  date('Ymd', strtotime($row->dia_debito. '-' .substr($_GET['data'],5,2). '-' . substr($_GET['data'],0,4)));
+                                        
+                    // Gera apenas parcelas aonde minha data original (dia + mês + ano) seja maior ou igual a minha data de venda de negócios, evitando cobrança retroativa 
+                    if($data_original >= $row->data_venda)
+                    { 
+                        // Se possui meu negocio ele busca na data de vencimento informada
+                        $sql = "SELECT id FROM negocio_parcelas WHERE negocio_id = $row->id AND vencimento_original = '$data_original'";
+                        $res2 = $connection->query($sql);
 
-                    // Verifica se meu negocio possui parcela
-                    if($res2->lengths == null)
-                    {
-                        // Conta meu número de parcelas pelo meu negocio                    
-                        $sql = "SELECT COUNT(*) AS contador FROM negocio_parcelas WHERE negocio_id = $row->id";
-                        $res3 = $connection->query($sql);
+                        // Verifica se meu negocio possui parcela
+                        if($res2->lengths == null)
+                        {
+                            // Conta meu número de parcelas pelo meu negocio                    
+                            $sql = "SELECT COUNT(*) AS contador FROM negocio_parcelas WHERE negocio_id = $row->id";
+                            $res3 = $connection->query($sql);
 
-                        $row3 = $res3->fetch_object();
+                            $row3 = $res3->fetch_object();
 
-                        // Acrescenta sempre uma parcela pelo meu contador gerado a partir do negocio 
-                        $numero_parcelas = $row3->contador;
-                        // Geramos nossa parcela e inserimos os dados no banco
-                        $sql = "INSERT INTO negocio_parcelas (negocio_id, vencimento, valor, total, pagamento_parcelas, numero_parcela, vencimento_original)
-                                VALUES ($row->id, $data, $row->valor_total, $row->valor_total, 0, $numero_parcelas, $data_original)";
-                        $res4 = $connection->query($sql);
-                        
-                    }
+                            // Acrescenta sempre uma parcela pelo meu contador gerado a partir do negocio 
+                            $numero_parcelas = $row3->contador;
+                                            
+                            // Geramos nossa parcela e inserimos os dados no banco
+                            $sql = "INSERT INTO negocio_parcelas (negocio_id, vencimento, valor, total, pagamento_parcelas, numero_parcela, vencimento_original)
+                                    VALUES ($row->id, $data, $row->valor_total, $row->valor_total, 0, $numero_parcelas, $data_original)";
+                            $res4 = $connection->query($sql);
+                                    
+                        }
+                    } 
                 }
+
+                $dia+= -1;
+
             }
-
-            $dia+= -1;
+        }
     }
+    
+    //  header("Location: index_cef.php");
 
-         header("Location: index_cef.php");
-
-    ?>
+?>
