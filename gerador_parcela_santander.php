@@ -49,10 +49,9 @@
                                INNER JOIN convenios_debito_em_conta AS C ON F.id = C.id
                                WHERE N.dia_debito = $dia AND N.status_negocio = 1 AND C.cod_convenio = '$convenio'";
                 $res = $connection->query($sql);
-               
+                
                 while($row = $res->fetch_object())
                 {   
-                    var_dump($row);
                     $data_original = date('Ymd', strtotime($row->dia_debito. '-' .substr($_GET['data'],5,2). '-' . substr($_GET['data'],0,4)));
                                             
                     // Gera apenas parcelas aonde minha data original (dia + mês + ano) seja maior ou igual a minha data de venda de negócios, evitando cobrança retroativa 
