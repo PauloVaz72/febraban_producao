@@ -147,7 +147,7 @@
         }
         	// Insere dados do arquivo debito em conta
 			$sql = "INSERT INTO arquivos_debito_conta (nome_arquivo, tipo_arquivo, data_criacao, convenio, numero_registros, registros_falha, arquivo_optante, numero_arquivo) 
-            VALUES ('$nome_arquivo', 'REM', date('Y-m-d'), $convenio, $numero_sequencial_registroE, 0, $optante, $numero_sequencial_arquivo)";
+                    VALUES ('$nome_arquivo', 'REM', date('Y-m-d'), $convenio, $numero_sequencial_registroE, 0, $optante, $numero_sequencial_arquivo)";
             $res = $connection->query($sql);
     }
         
