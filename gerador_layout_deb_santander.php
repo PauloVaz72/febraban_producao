@@ -17,14 +17,15 @@
     {
         // Busca os dados do convenio
 		$sql = "SELECT * , bancos.nome_banco, bancos.codigo_febraban, convenios_debito_em_conta.banco_id
-        FROM convenios_debito_em_conta 
-        INNER JOIN bancos
-        ON bancos.id = convenios_debito_em_conta.banco_id	
-        WHERE `cod_convenio` = ".$convenio;
+                FROM convenios_debito_em_conta 
+                INNER JOIN bancos
+                ON bancos.id = convenios_debito_em_conta.banco_id	
+                WHERE `cod_convenio` = ".$convenio;
         $res = $connection->query($sql);
-        $row = $res->fetch_object();
+        
+        $row       = $res->fetch_object();
         $cod_banco = $row->codigo_febraban;
-        $convenio = $row->cod_convenio;	
+        $convenio  = $row->cod_convenio;	
         $numero_sequencial_arquivo = $row->numero_sequencial_arquivo  + 1;
 
         switch($cod_banco)
@@ -47,13 +48,13 @@
                 $RegistroA["versao_layout"]                 = $row->versao_layout;
                 $RegistroA["identificacao_servico"]         = $row->identificacao_servico;
                 $RegistroA["reservado_futuro"]              = " ";
-                $content = '';
+                $content  = '';
                 $content .= santanderDebAuto150Layout::RegistroA($RegistroA).PHP_EOL;
                 
                 
                 //REGISTRO E
 				// Busca as Parcelas
-				$condicao = $optante == 1 ? "negocio_parcelas.numero_registro_e = 0 AND " : "";
+				$condicao  = $optante == 1 ? "negocio_parcelas.numero_registro_e = 0 AND " : "";
 				$condicao2 = $optante == 0 ? "clientes_dados_debito.optante = 0 AND " : "";
 
 				$sql = "SELECT clientes.cpf, convenios_debito_em_conta.cod_convenio, forma_pagamento.dias_antecedencia_cobranca_debito, clientes_dados_debito.agencia_bancaria, clientes_dados_debito.optante , clientes_dados_debito.conta_corrente, negocio_parcelas.*  
@@ -89,18 +90,18 @@
                             $data_vencimento = str_replace('-', '', $row->vencimento);
                         }
                         
-                        $sql = "UPDATE `negocio_parcelas` SET `numero_registro_e` = ".$numero_sequencial_registroE.", vencimento = ".$data_vencimento." WHERE `id` = ".$row->id;
+                        $sql  = "UPDATE `negocio_parcelas` SET `numero_registro_e` = ".$numero_sequencial_registroE.", vencimento = ".$data_vencimento." WHERE `id` = ".$row->id;
                         $res2 = $connection->query($sql);
                         
                         // Soma e Formata o valor da parcela
                         $soma_valores = $soma_valores + $row->total;
-                        $inteiro = intval($row->total);
-                        $centavos = substr(number_format($row->total, 2, ',', '.'), strpos(number_format($row->total, 2, ',', '.'),',',0)+1, strlen(number_format($row->total, 2, ',', '.')));
+                        $inteiro      = intval($row->total);
+                        $centavos     = substr(number_format($row->total, 2, ',', '.'), strpos(number_format($row->total, 2, ',', '.'),',',0)+1, strlen(number_format($row->total, 2, ',', '.')));
                     } else {
                         $data_vencimento = '00000000';
-                        $soma_valores = 0;
-                        $inteiro = 0;
-                        $centavos = '00';
+                        $soma_valores    = 0;
+                        $inteiro         = 0;
+                        $centavos        = '00';
                     }
 
                     // Preenche Array do Registro E

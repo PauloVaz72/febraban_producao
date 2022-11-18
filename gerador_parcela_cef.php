@@ -7,7 +7,7 @@
     include('connection.php');
 
     // Pegando apenas o dia da data passada por parâmetro
-    $dia = date('d',strtotime($_GET['data'])); 
+    $dia  = date('d',strtotime($_GET['data'])); 
 
     // Pegando a data informada por parâmetro
     $data = date('Ymd',strtotime(substr($_GET['data'],8,2).'-'.substr($_GET['data'],5,2).'-'.substr($_GET['data'],0,4)));
@@ -22,12 +22,12 @@
     {
         // Busca os dados do convenio
         $sql = "SELECT * , bancos.nome_banco, bancos.codigo_febraban, convenios_debito_em_conta.banco_id
-        FROM convenios_debito_em_conta 
-        INNER JOIN bancos
-        ON bancos.id = convenios_debito_em_conta.banco_id	
-        WHERE `cod_convenio` = ".$convenio;
-
-        $res       = $connection->query($sql);
+                FROM convenios_debito_em_conta 
+                INNER JOIN bancos
+                ON bancos.id = convenios_debito_em_conta.banco_id	
+                WHERE `cod_convenio` = ".$convenio;
+        $res = $connection->query($sql);
+        
         $row       = $res->fetch_object();
         $cod_banco = $row->codigo_febraban;
         $convenio  = $row->cod_convenio;
@@ -89,6 +89,6 @@
         }
     }
 
-    //  header("Location: index_cef.php");
+     header("Location: index_cef.php");
 
 ?>
