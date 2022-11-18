@@ -9,9 +9,11 @@
 	include('connection.php'); 
     
     // Recebendo por parâmetro de url o cod do convenio, data de vencimento e se o cliente é optante
-    $convenio = $_GET['convenio'];
+    $convenio   = $_GET['convenio'];
+
     $vencimento = date('Y-m-d',strtotime($_GET['data']));
-    $optante = $_GET['optante'];
+
+    $optante    = $_GET['optante'];
 
     if(isset($_GET['convenio']))
     {
@@ -71,9 +73,6 @@
 				$RegistroE = array();
                 $numero_sequencial_registroE = 0;
 				$soma_valores = 0;
-                
-                var_dump($res);
-                exit();
 
                 while($row = $res->fetch_object())
                 { 
@@ -97,6 +96,7 @@
                         $soma_valores = $soma_valores + $row->total;
                         $inteiro      = intval($row->total);
                         $centavos     = substr(number_format($row->total, 2, ',', '.'), strpos(number_format($row->total, 2, ',', '.'),',',0)+1, strlen(number_format($row->total, 2, ',', '.')));
+                        
                     } else {
                         $data_vencimento = '00000000';
                         $soma_valores    = 0;
@@ -138,7 +138,7 @@
                     fwrite($fp,$content);
                     fclose($fp);
                     
-                    // header("Location: index_santander.php");
+                    header("Location: index_santander.php");
 
                     break;
 

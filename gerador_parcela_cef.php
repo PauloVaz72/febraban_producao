@@ -7,10 +7,10 @@
     include('connection.php');
 
     // Pegando apenas o dia da data passada por parâmetro
-    $dia  = date('d',strtotime($_GET['data'])); 
+    $dia     = date('d',strtotime($_GET['data'])); 
 
     // Pegando a data informada por parâmetro
-    $data = date('Ymd',strtotime(substr($_GET['data'],8,2).'-'.substr($_GET['data'],5,2).'-'.substr($_GET['data'],0,4)));
+    $data    = date('Ymd',strtotime(substr($_GET['data'],8,2).'-'.substr($_GET['data'],5,2).'-'.substr($_GET['data'],0,4)));
         
     // Passando por parâmetro optante
     $optante = $_GET['optante'];
@@ -52,7 +52,6 @@
                
                 while($row = $res->fetch_object())
                 {   
-                    var_dump($row);
                     $data_original = date('Ymd', strtotime($row->dia_debito. '-' .substr($_GET['data'],5,2). '-' . substr($_GET['data'],0,4)));
                                             
                     // Gera apenas parcelas aonde minha data original (dia + mês + ano) seja maior ou igual a minha data de venda de negócios, evitando cobrança retroativa 
