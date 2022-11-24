@@ -1,7 +1,6 @@
 <?php
 
 namespace febraban;
-
 class santanderDebAuto150Layout{
 
     public static function Arquivo($cfg)

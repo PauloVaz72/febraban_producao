@@ -39,19 +39,19 @@
             {
                 // Consulta negócio pelo dia da data informada, status e convênio
                 $sql = "SELECT N.id AS negocio, 
-                               N.dia_debito AS dia_debito, 
-                               N.data_venda AS data_venda,
-                               N.valor_total AS valor_total,
-                               F.id AS forma_pgto, 
-                               C.id AS convenio 
-                               FROM `negocios` AS N
-                               INNER JOIN forma_pagamento AS F ON N.forma_pagamento = F.id
-                               INNER JOIN convenios_debito_em_conta AS C ON F.id = C.id
-                               WHERE N.dia_debito = $dia AND N.status_negocio = 1 AND C.cod_convenio = '$convenio'";
+                        N.dia_debito AS dia_debito, 
+                        N.data_venda AS data_venda,
+                        N.valor_total AS valor_total,
+                        F.id AS d, 
+                        C.id AS convenio 
+                        FROM `negocios` AS N
+                        INNER JOIN forma_pagamento AS F ON N.forma_pagamento = F.id
+                        INNER JOIN convenios_debito_em_conta AS C ON F.id = C.id
+                        WHERE N.dia_debito = $dia AND N.status_negocio = 1 AND C.cod_convenio = '$convenio'";
                 $res = $connection->query($sql);
                 
                 while($row = $res->fetch_object())
-                {   
+                {
                     $data_original = date('Ymd', strtotime($row->dia_debito. '-' .substr($_GET['data'],5,2). '-' . substr($_GET['data'],0,4)));
                                             
                     // Gera apenas parcelas aonde minha data original (dia + mês + ano) seja maior ou igual a minha data de venda de negócios, evitando cobrança retroativa 
@@ -75,14 +75,14 @@
                                                 
                             // Geramos nossa parcela e inserimos os dados no banco
                             $sql  = "INSERT INTO negocio_parcelas (negocio_id, vencimento, valor, total, pagamento_parcelas, numero_parcela, vencimento_original)
-                                    VALUES ($row->negocio, $data, $row->valor_total, $row->valor_total, 0, $numero_parcelas, $data_original)";
+                                     VALUES ($row->negocio, $data, $row->valor_total, $row->valor_total, 0, $numero_parcelas, $data_original)";
                             $res4 = $connection->query($sql);
                                         
                         }
                     } 
                 }
 
-                $dia+= -1;
+                $dia += -1;
 
             } 
         }

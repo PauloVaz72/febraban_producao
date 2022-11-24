@@ -1,7 +1,6 @@
 <?php
 
 namespace febraban;
-
 class caixaDebAuto150LayoutNSGD{
 
 	public static function Arquivo($cfg)
