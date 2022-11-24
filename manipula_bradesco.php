@@ -25,7 +25,7 @@ if(isset($_POST['gera_parcela']))
 elseif(isset($_POST['gera_arquivo_debito']))
 {
     $gera_arquivo_debito = $_POST['gera_arquivo_debito'];
-    $url = 'gerador_parcela_bradesco.php?data=' . $data . '&convenio=' . $convenio;
+    $url = 'gerador_layout_deb_bradesco.php?data=' . $data . '&convenio=' . $convenio;
     header("Location: $url");
 
 }

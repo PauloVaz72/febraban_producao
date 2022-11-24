@@ -56,7 +56,7 @@ class caixaDebAuto150LayoutNSGD{
 	public static function RegistroE($cfg)
 	{
 
-		$cod_registro 					       = isset($cfg['cod_registro']) ? $cfg['cod_registro'] :'';
+		$cod_registro 					       = isset($cfg['cod_registro']) ? $cfg['cod_registro'] :' ';
 		$id_cliente_empresa 				   = isset($cfg['id_cliente_empresa']) ? $cfg['id_cliente_empresa'] :' ';
 		$agencia_debito 					   = isset($cfg['agencia_debito']) ? $cfg['agencia_debito'] :' ';
         $brancos 							   = isset($cfg['brancos']) ? $cfg['brancos']: '';
@@ -93,12 +93,12 @@ class caixaDebAuto150LayoutNSGD{
 	public static function RegistroZ($cfg)
 	{
 
-	 	$cod_registro 						  = isset($cfg['cod_registro']) ? $cfg['cod_registro'] :' ';
-	 	$total_registros_arquivo 			  = isset($cfg['total_registros_arquivo']) ? $cfg['total_registros_arquivo'] :' ';
-	 	$valor_total_registro_arquivo 		  = isset($cfg['valor_total_registro_arquivo']) ? $cfg['valor_total_registro_arquivo'] :' ';
-	 	$reservado_futuroZ1 				  = isset($cfg['reservado_futuroZ1']) ? $cfg['reservado_futuroZ1'] :' ';
-	 	$numero_sequencial_registro 		  = isset($cfg['numero_sequencial_registro']) ? $cfg['numero_sequencial_registro'] :' ';
-	 	$reservado_futuroZ2 				  = isset($cfg['reservado_futuroZ2']) ? $cfg['reservado_futuroZ2'] :' ';
+	 	$cod_registro 						    = isset($cfg['cod_registro']) ? $cfg['cod_registro'] :' ';
+	 	$total_registros_arquivo 			    = isset($cfg['total_registros_arquivo']) ? $cfg['total_registros_arquivo'] :' ';
+	 	$valor_total_registro_arquivo 		    = isset($cfg['valor_total_registro_arquivo']) ? $cfg['valor_total_registro_arquivo'] :' ';
+	 	$reservado_futuroZ1 				    = isset($cfg['reservado_futuroZ1']) ? $cfg['reservado_futuroZ1'] :' ';
+	 	$numero_sequencial_registro 		    = isset($cfg['numero_sequencial_registro']) ? $cfg['numero_sequencial_registro'] :' ';
+	 	$reservado_futuroZ2 				 	= isset($cfg['reservado_futuroZ2']) ? $cfg['reservado_futuroZ2'] :' ';
 
 	 	$campos = array();
 	 	$campos['cod_registro'] 			    = array(1,1,'X:1',$cod_registro);

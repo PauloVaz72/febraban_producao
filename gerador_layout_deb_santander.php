@@ -122,8 +122,8 @@
 
                 // Registro Z, confere a somatoria dos Registros E
                     $RegistroZ = array();
-                    $inteiro = intval($soma_valores);
-                    $centavos = substr(number_format($soma_valores, 2, ',', '.'), strpos(number_format($soma_valores, 2, ',', '.'),',',0)+1, strlen(number_format($soma_valores, 2, ',', '.')));
+                    $inteiro   = intval($soma_valores);
+                    $centavos  = substr(number_format($soma_valores, 2, ',', '.'), strpos(number_format($soma_valores, 2, ',', '.'),',',0)+1, strlen(number_format($soma_valores, 2, ',', '.')));
 
                     $RegistroZ["cod_registro"]                  = "Z";
                     $RegistroZ["total_registros_arquivo"]       = $numero_sequencial_registroE + 2;

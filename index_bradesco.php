@@ -19,7 +19,7 @@
     <div class="container text-center">
         <div class="row center">
             <div class="col-md-3 ajustaform">
-                <form action="manipula_santander.php" method="POST">
+                <form action="manipula_bradesco.php" method="POST">
                     <div class="row mb-3">
                         <label class="form-label" for="data">Data de vencimento: </label>
                         <input type="date" class="form-control" name="data">
