@@ -1,7 +1,6 @@
 <?php
 
 namespace febraban;
-
 class bradescoDebAuto400LayoutCNAB{
     
     public static function Arquivo($cfg)
@@ -11,9 +10,9 @@ class bradescoDebAuto400LayoutCNAB{
 	}
 
 
-    public static function RegistroA($cfg)
+    public static function Registro0($cfg) 
     {
-
+        // Registro 0 - header label (conf layout para cabeçalho)
         $cod_registro 						                = isset($cfg['cod_registro']) ? $cfg['cod_registro'] :' ';
         $cod_remessa  						                = isset($cfg['cod_remessa']) ? $cfg['cod_remessa'] : 1;
         $literal_remessa                                    = isset($cfg['literal_remessa']) ? $cfg['literal_remessa'] : ' ';
@@ -52,10 +51,10 @@ class bradescoDebAuto400LayoutCNAB{
     }
 
 
-    public static function RegistroE($cfg)
+    public static function Registro6($cfg)
     {
         // Registro de Transação -Tipo 6 (conf cadastro para débito automático)
-        $cod_registro 					                    = isset($cfg['cod_registro']) ? $cfg['cod_registro'] :' ';
+        $cod_registro2 					                    = isset($cfg['cod_registro2']) ? $cfg['cod_registro2'] :' ';
         $carteira                                           = isset($cfg['carteira']) ? $cfg['carteira'] : ' ';
         $agencia_debito 					                = isset($cfg['agencia_debito']) ? $cfg['agencia_debito'] :' ';
         $conta_corrente                                     = isset($cfg['conta_corrente']) ? $cfg['conta_corrente'] : ' ';
@@ -66,11 +65,11 @@ class bradescoDebAuto400LayoutCNAB{
         $consulta_saldo_apos_vencimento                     = isset($cfg['consulta_saldo_apos_vencimento']) ? $cfg['consulta_saldo_apos_vencimento'] : ' ';
         $num_cod_id_contrato                                = isset($cfg['num_cod_id_contrato']) ? $cfg['num_cod_id_contrato'] : ' ';
         $prazo_validade_contrato                            = isset($cfg['prazo_validade_contrato']) ? $cfg['prazo_validade_contrato'] : ' ';
-        $reservado_futuro_E                                 = isset($cfg['reservado_futuro_E']) ? $cfg['reservado_futuro_E'] : ' ';
+        $reservado_futuro_6                                 = isset($cfg['reservado_futuro_6']) ? $cfg['reservado_futuro_6'] : ' ';
         $num_sequencial_registro                            = isset($cfg['num_sequencial_registro']) ? $cfg['num_sequencial_registro'] : ' ';
 
         $campos = array();
-        $campos['cod_registro']                             = array(1,1, '9:1',$cod_registro);
+        $campos['cod_registro2']                            = array(1,1, '9:1',$cod_registro2);
         $campos['carteira']                                 = array(2,4, '9:3',$carteira);
         $campos['agencia_debito']                           = array(5,9, '9:5',$agencia_debito);
         $campos['conta_corrente']                           = array(10,16, '9:7',$conta_corrente);
@@ -81,116 +80,122 @@ class bradescoDebAuto400LayoutCNAB{
         $campos['consulta_saldo_apos_vencimento']           = array(31,31, 'X:1',$consulta_saldo_apos_vencimento);
         $campos['num_cod_id_contrato']                      = array(32,57, 'X:25',$num_cod_id_contrato);
         $campos['prazo_validade_contrato']                  = array(58,65, '9:8',$prazo_validade_contrato);
-        $campos['reservado_futuro_E']                       = array(66,395, 'X:330',$reservado_futuro_E);
+        $campos['reservado_futuro_6']                       = array(66,395, 'X:330',$reservado_futuro_6);
         $campos['num_sequencial_registro']                  = array(396,400, '9:5',$num_sequencial_registro);
 
-        // Registro de transação - tipo 1 (conf layout para cobrança)
-        $cod_registro2 					                    = isset($cfg['cod_registro2']) ? $cfg['cod_registro2'] :' ';
-        $agencia_debito2 					                = isset($cfg['agencia_debito2']) ? $cfg['agencia_debito2'] :' ';
-        $digito_agencia_debito                              = isset($cfg['digito_agencia_debito']) ? $cfg['digito_agencia_debito'] :' ';
-        $razao_conta_corrente                               = isset($cfg['razao_conta_corrente']) ? $cfg['razao_conta_corrente'] :' ';
-        $conta_corrente2                                    = isset($cfg['conta_corrente']) ? $cfg['conta_corrente'] : ' ';
-        $digito_conta_corrente                              = isset($cfg['digito_conta_corrente']) ? $cfg['digito_conta_corrente'] : ' ';
-        $id_empresa_beneficiaria_banco                      = isset($cfg['id_empresa_beneficiaria_banco']) ? $cfg['id_empresa_beneficiaria_banco'] : ' ';
-        $num_controle_participante                          = isset($cfg['num_controle_participante']) ? $cfg['num_controle_participante'] : ' ';
-        $cod_banco_deb_camara_compensacao                   = isset($cfg['cod_banco_deb_camara_compensacao']) ? $cfg['cod_banco_deb_camara_compensacao'] : ' '; 
-        $campo_multa                                        = isset($cfg['campo_multa']) ? $cfg['campo_multa'] : ' ';
-        $percentual_multa                                   = isset($cfg['percentual_multa']) ? $cfg['percentual_multa'] : ' ';
-        $id_titulo_banco                                    = isset($cfg['id_titulo_banco']) ? $cfg['id_titulo_banco'] : ' ';
-        $digito_autoconferencia_num_bancario                = isset($cfg['digito_autoconferencia_num_bancario']) ? $cfg['digito_autoconferencia_num_bancario'] : ' ';
-        $desconto_bonificacao_dia                           = isset($cfg['desconto_bonificacao_dia']) ? $cfg['desconto_bonificacao_dia'] : ' ';
-        $condicao_emissao_papeleta_cobranca                 = isset($cfg['condicao_emissao_papeleta_cobranca']) ? $cfg['condicao_emissao_papeleta_cobranca'] : ' ';
-        $ident_emite_boleto_deb_auto                        = isset($cfg['ident_emite_boleto_deb_auto']) ? $cfg['ident_emite_boleto_deb_auto'] : ' ';
-        $id_operacao_banco                                  = isset($cfg['id_operacao_banco']) ? $cfg['id_operacao_banco'] : ' ';
-        $id_rateio_credito                                  = isset($cfg['id_rateio_credito']) ? $cfg['id_rateio_credito'] : ' ';
-        $enderacamento_aviso_deb_auto                       = isset($cfg['enderacamento_aviso_deb_auto']) ? $cfg['enderacamento_aviso_deb_auto'] : ' ';
-        $quantidade_pagamentos                              = isset($cfg['quantidade_pagamentos']) ? $cfg['quantidade_pagamentos'] : ' ';
-        $id_ocorrencia                                      = isset($cfg['id_ocorrencia']) ? $cfg['id_ocorrencia'] : ' ';                
-        $num_documento                                      = isset($cfg['num_documento']) ? $cfg['num_documento'] : ' ';
-        $data_vencimento_titulo                             = isset($cfg['data_vencimento_titulo']) ? $cfg['data_vencimento_titulo'] : ' ';
-        $valor_titulo                                       = isset($cfg['valor_titulo']) ? $cfg['valor_titulo'] : ' ';
-        $banco_encarregado_cobranca                         = isset($cfg['banco_encarregado_cobranca']) ? $cfg['banco_encarregado_cobranca'] : ' ';
-        $agencia_depositaria                                = isset($cfg['agencia_depositaria']) ? $cfg['agencia_depositaria'] : ' ';
-        $identificacao                                      = isset($cfg['identificacao']) ? $cfg['identificacao'] : ' ';
-        $data_emissao_titulo                                = isset($cfg['data_emissao_titulo']) ? $cfg['data_emissao_titulo'] : ' ';
-        $instrucao1                                         = isset($cfg['instrucao1']) ? $cfg['instrucao1'] : ' ';
-        $instrucao2                                         = isset($cfg['instrucao2']) ? $cfg['instrucao2'] : ' ';
-        $valor_cobrado_dia_atraso                           = isset($cfg['valor_cobrado_dia_atraso']) ? $cfg['valor_cobrado_dia_atraso'] : ' ';
-        $data_limite_concessao_desconto                     = isset($cfg['data_limite_concessao_desconto']) ? $cfg['data_limite_concessao_desconto'] : ' ';
-        $valor_desconto                                     = isset($cfg['valor_desconto']) ? $cfg['valor_desconto'] : ' ';
-        $valor_iof                                          = isset($cfg['valor_iof']) ? $cfg['valor_iof'] : ' ';
-        $valor_abatimento                                   = isset($cfg['valor_abatimento']) ? $cfg['valor_abatimento'] : ' ';
-        $id_tipo_inscricao_pagador                          = isset($cfg['id_tipo_inscricao_pagador']) ? $cfg['id_tipo_inscricao_pagador'] : ' ';
-        $num_inscricao_pagador                              = isset($cfg['num_inscricao_pagador']) ? $cfg['num_inscricao_pagador'] : ' ';
-        $nome_pagador                                       = isset($cfg['nome_pagador']) ? $cfg['nome_pagador'] : ' ';
-        $endereco_completo                                  = isset($cfg['endereco_completo']) ? $cfg['endereco_completo'] : ' ';
-        $mensagem1                                          = isset($cfg['mensagem1']) ? $cfg['mensagem1'] : ' ';
-        $cep                                                = isset($cfg['cep']) ? $cfg['cep'] : ' ';
-        $sufixo_cep                                         = isset($cfg['sufixo_cep']) ? $cfg['sufixo_cep'] : ' ';
-        $beneficiário_final                                 = isset($cfg['beneficiário_final']) ? $cfg['beneficiário_final'] : ' ';
-        $num_sequencial_registro2                           = isset($cfg['numero_sequencial_registro2']) ? $cfg['numero_sequencial_registro2'] : ' ';
-        
-        $campos2 = array();
-        $campos2['cod_registro2']                           = array(1,1, '9:1',$cod_registro2);
-        $campos2['agencia_debito2']                         = array(2,6, '9:5',$agencia_debito2);
-        $campos2['digito_agencia_debito']                   = array(7,7, 'X:1',$digito_agencia_debito);
-        $campos2['razao_conta_corrente']                    = array(8,12, '9:5',$razao_conta_corrente);
-        $campos2['conta_corrente2']                         = array(13,19, '9:7',$conta_corrente2);
-        $campos2['digito_conta_corrente']                   = array(20,20, 'X:1',$digito_conta_corrente);
-        $campos2['id_empresa_beneficiaria_banco']           = array(21,37, 'X:17',$id_empresa_beneficiaria_banco);
-        $campos2['num_controle_participante']               = array(38,62, 'X:25',$num_controle_participante);
-        $campos2['cod_banco_deb_camara_compensacao']        = array(63,65, '9:3',$cod_banco_deb_camara_compensacao);
-        $campos2['campo_multa']                             = array(66,66, '9:1',$campo_multa);
-        $campos2['percentual_multa']                        = array(67,70, '9:4',$percentual_multa);
-        $campos2['id_titulo_banco']                         = array(71,81, '9:11',$id_titulo_banco);
-        $campos2['digito_autoconferencia_num_bancario']     = array(82,82, 'X:1',$digito_autoconferencia_num_bancario);
-        $campos2['desconto_bonificacao_dia']                = array(83,92, '9:10',$desconto_bonificacao_dia);
-        $campos2['condicao_emissao_papeleta_cobranca']      = array(93,93, '9:1',$condicao_emissao_papeleta_cobranca);
-        $campos2['ident_emite_boleto_deb_auto']             = array(94,94, 'X:1',$ident_emite_boleto_deb_auto);
-        $campos2['id_operacao_banco']                       = array(95,104, 'X:10',$id_operacao_banco);
-        $campos2['id_rateio_credito']                       = array(105,105, 'X:1',$id_rateio_credito);
-        $campos2['enderacamento_aviso_deb_auto']            = array(106,106, '9:1',$enderacamento_aviso_deb_auto);
-        $campos2['quantidade_pagamentos']                   = array(107,108, 'X:2',$quantidade_pagamentos);
-        $campos2['id_ocorrencia']                           = array(109,110, '9:2',$id_ocorrencia);
-        $campos2['num_documento']                           = array(111,120, 'X:10',$num_documento);
-        $campos2['data_vencimento_titulo']                  = array(121,126, '9:6',$data_vencimento_titulo);
-        $campos2['valor_titulo']                            = array(127,139, '9:13',$valor_titulo);
-        $campos2['banco_encarregado_cobranca']              = array(140,142, '9:3',$banco_encarregado_cobranca);
-        $campos2['agencia_depositaria']                     = array(143,147, '9:5',$agencia_depositaria);
-        $campos2['identificacao']                           = array(150,150, 'X:1',$identificacao);
-        $campos2['data_emissao_titulo']                     = array(151,156, '9:6',$data_emissao_titulo);
-        $campos2['instrucao1']                              = array(157,158, '9:2',$instrucao1);
-        $campos2['instrucao2']                              = array(159,160, '9:2',$instrucao2);
-        $campos2['valor_cobrado_dia_atraso']                = array(161,173, '9:13',$valor_cobrado_dia_atraso);
-        $campos2['data_limite_concessao_desconto']          = array(174,179, '9:6',$data_limite_concessao_desconto);
-        $campos2['valor_desconto']                          = array(180,192,'9:13',$valor_desconto);
-        $campos2['valor_iof']                               = array(193,205,'9:13',$valor_iof);
-        $campos2['valor_abatimento']                        = array(206,218,'9:13',$valor_abatimento);
-        $campos2['id_tipo_inscricao_pagador']               = array(219,220,'9:2',$id_tipo_inscricao_pagador);
-        $campos2['num_inscricao_pagador']                   = array(221,234,'9:14',$num_inscricao_pagador);
-        $campos2['nome_pagador']                            = array(237,274,'X:40',$nome_pagador);
-        $campos2['endereco_completo']                       = array(275,314,'X:40',$endereco_completo);
-        $campos2['mensagem1']                               = array(315,326,'X:12',$mensagem1);
-        $campos2['cep']                                     = array(327,331,'9:5',$cep);
-        $campos2['sufixo_cep']                              = array(332,334,'9:3',$sufixo_cep);
-        $campos2['beneficiário_final']                      = array(335,394,'X:60',$beneficiário_final);
-        $campos2['num_sequencial_registro2']                = array(395,400, '9:6',$num_sequencial_registro2);
-
         return bradescoDebAuto400LayoutCNAB::FormatarCampos($campos);
-
     }
 
 
-    public static function RegistroZ($cfg)
+    // public static function Registro1()
+    // {
+        //Registro de transação - tipo 1 (conf layout para cobrança)
+    //     $cod_registro3 					                    = isset($cfg['cod_registro']) ? $cfg['cod_registro3'] :' ';
+    //     $agencia_debito 					                = isset($cfg['agencia_debito']) ? $cfg['agencia_debito'] :' ';
+    //     $digito_agencia_debito                              = isset($cfg['digito_agencia_debito']) ? $cfg['digito_agencia_debito'] :' ';
+    //     $razao_conta_corrente                               = isset($cfg['razao_conta_corrente']) ? $cfg['razao_conta_corrente'] :' ';
+    //     $conta_corrente                                     = isset($cfg['conta_corrente']) ? $cfg['conta_corrente'] : ' ';
+    //     $digito_conta_corrente                              = isset($cfg['digito_conta_corrente']) ? $cfg['digito_conta_corrente'] : ' ';
+    //     $id_empresa_beneficiaria_banco                      = isset($cfg['id_empresa_beneficiaria_banco']) ? $cfg['id_empresa_beneficiaria_banco'] : ' ';
+    //     $num_controle_participante                          = isset($cfg['num_controle_participante']) ? $cfg['num_controle_participante'] : ' ';
+    //     $cod_banco_deb_camara_compensacao                   = isset($cfg['cod_banco_deb_camara_compensacao']) ? $cfg['cod_banco_deb_camara_compensacao'] : ' '; 
+    //     $campo_multa                                        = isset($cfg['campo_multa']) ? $cfg['campo_multa'] : ' ';
+    //     $percentual_multa                                   = isset($cfg['percentual_multa']) ? $cfg['percentual_multa'] : ' ';
+    //     $id_titulo_banco                                    = isset($cfg['id_titulo_banco']) ? $cfg['id_titulo_banco'] : ' ';
+    //     $digito_autoconferencia_num_bancario                = isset($cfg['digito_autoconferencia_num_bancario']) ? $cfg['digito_autoconferencia_num_bancario'] : ' ';
+    //     $desconto_bonificacao_dia                           = isset($cfg['desconto_bonificacao_dia']) ? $cfg['desconto_bonificacao_dia'] : ' ';
+    //     $condicao_emissao_papeleta_cobranca                 = isset($cfg['condicao_emissao_papeleta_cobranca']) ? $cfg['condicao_emissao_papeleta_cobranca'] : ' ';
+    //     $ident_emite_boleto_deb_auto                        = isset($cfg['ident_emite_boleto_deb_auto']) ? $cfg['ident_emite_boleto_deb_auto'] : ' ';
+    //     $id_operacao_banco                                  = isset($cfg['id_operacao_banco']) ? $cfg['id_operacao_banco'] : ' ';
+    //     $id_rateio_credito                                  = isset($cfg['id_rateio_credito']) ? $cfg['id_rateio_credito'] : ' ';
+    //     $enderacamento_aviso_deb_auto                       = isset($cfg['enderacamento_aviso_deb_auto']) ? $cfg['enderacamento_aviso_deb_auto'] : ' ';
+    //     $quantidade_pagamentos                              = isset($cfg['quantidade_pagamentos']) ? $cfg['quantidade_pagamentos'] : ' ';
+    //     $id_ocorrencia                                      = isset($cfg['id_ocorrencia']) ? $cfg['id_ocorrencia'] : ' ';                
+    //     $num_documento                                      = isset($cfg['num_documento']) ? $cfg['num_documento'] : ' ';
+    //     $data_vencimento_titulo                             = isset($cfg['data_vencimento_titulo']) ? $cfg['data_vencimento_titulo'] : ' ';
+    //     $valor_titulo                                       = isset($cfg['valor_titulo']) ? $cfg['valor_titulo'] : ' ';
+    //     $banco_encarregado_cobranca                         = isset($cfg['banco_encarregado_cobranca']) ? $cfg['banco_encarregado_cobranca'] : ' ';
+    //     $agencia_depositaria                                = isset($cfg['agencia_depositaria']) ? $cfg['agencia_depositaria'] : ' ';
+    //     $identificacao                                      = isset($cfg['identificacao']) ? $cfg['identificacao'] : ' ';
+    //     $data_emissao_titulo                                = isset($cfg['data_emissao_titulo']) ? $cfg['data_emissao_titulo'] : ' ';
+    //     $instrucao1                                         = isset($cfg['instrucao1']) ? $cfg['instrucao1'] : ' ';
+    //     $instrucao2                                         = isset($cfg['instrucao2']) ? $cfg['instrucao2'] : ' ';
+    //     $valor_cobrado_dia_atraso                           = isset($cfg['valor_cobrado_dia_atraso']) ? $cfg['valor_cobrado_dia_atraso'] : ' ';
+    //     $data_limite_concessao_desconto                     = isset($cfg['data_limite_concessao_desconto']) ? $cfg['data_limite_concessao_desconto'] : ' ';
+    //     $valor_desconto                                     = isset($cfg['valor_desconto']) ? $cfg['valor_desconto'] : ' ';
+    //     $valor_iof                                          = isset($cfg['valor_iof']) ? $cfg['valor_iof'] : ' ';
+    //     $valor_abatimento                                   = isset($cfg['valor_abatimento']) ? $cfg['valor_abatimento'] : ' ';
+    //     $id_tipo_inscricao_pagador                          = isset($cfg['id_tipo_inscricao_pagador']) ? $cfg['id_tipo_inscricao_pagador'] : ' ';
+    //     $num_inscricao_pagador                              = isset($cfg['num_inscricao_pagador']) ? $cfg['num_inscricao_pagador'] : ' ';
+    //     $nome_pagador                                       = isset($cfg['nome_pagador']) ? $cfg['nome_pagador'] : ' ';
+    //     $endereco_completo                                  = isset($cfg['endereco_completo']) ? $cfg['endereco_completo'] : ' ';
+    //     $mensagem1                                          = isset($cfg['mensagem1']) ? $cfg['mensagem1'] : ' ';
+    //     $cep                                                = isset($cfg['cep']) ? $cfg['cep'] : ' ';
+    //     $sufixo_cep                                         = isset($cfg['sufixo_cep']) ? $cfg['sufixo_cep'] : ' ';
+    //     $beneficiário_final                                 = isset($cfg['beneficiário_final']) ? $cfg['beneficiário_final'] : ' ';
+    //     $num_sequencial_registro                            = isset($cfg['numero_sequencial_registro']) ? $cfg['numero_sequencial_registro'] : ' ';
+        
+    //     $campos = array();
+    //     $campos['cod_registro3']                            = array(1,1, '9:1',$cod_registro3);
+    //     $campos['agencia_debito']                           = array(2,6, '9:5',$agencia_debito);
+    //     $campos['digito_agencia_debito']                    = array(7,7, 'X:1',$digito_agencia_debito);
+    //     $campos['razao_conta_corrente']                     = array(8,12, '9:5',$razao_conta_corrente);
+    //     $campos['conta_corrente']                           = array(13,19, '9:7',$conta_corrente);
+    //     $campos['digito_conta_corrente']                    = array(20,20, 'X:1',$digito_conta_corrente);
+    //     $campos['id_empresa_beneficiaria_banco']            = array(21,37, 'X:17',$id_empresa_beneficiaria_banco);
+    //     $campos['num_controle_participante']                = array(38,62, 'X:25',$num_controle_participante);
+    //     $campos['cod_banco_deb_camara_compensacao']         = array(63,65, '9:3',$cod_banco_deb_camara_compensacao);
+    //     $campos['campo_multa']                              = array(66,66, '9:1',$campo_multa);
+    //     $campos['percentual_multa']                         = array(67,70, '9:4',$percentual_multa);
+    //     $campos['id_titulo_banco']                          = array(71,81, '9:11',$id_titulo_banco);
+    //     $campos['digito_autoconferencia_num_bancario']      = array(82,82, 'X:1',$digito_autoconferencia_num_bancario);
+    //     $campos['desconto_bonificacao_dia']                 = array(83,92, '9:10',$desconto_bonificacao_dia);
+    //     $campos['condicao_emissao_papeleta_cobranca']       = array(93,93, '9:1',$condicao_emissao_papeleta_cobranca);
+    //     $campos['ident_emite_boleto_deb_auto']              = array(94,94, 'X:1',$ident_emite_boleto_deb_auto);
+    //     $campos['id_operacao_banco']                        = array(95,104, 'X:10',$id_operacao_banco);
+    //     $campos['id_rateio_credito']                        = array(105,105, 'X:1',$id_rateio_credito);
+    //     $campos['enderacamento_aviso_deb_auto']             = array(106,106, '9:1',$enderacamento_aviso_deb_auto);
+    //     $campos['quantidade_pagamentos']                    = array(107,108, 'X:2',$quantidade_pagamentos);
+    //     $campos['id_ocorrencia']                            = array(109,110, '9:2',$id_ocorrencia);
+    //     $campos['num_documento']                            = array(111,120, 'X:10',$num_documento);
+    //     $campos['data_vencimento_titulo']                   = array(121,126, '9:6',$data_vencimento_titulo);
+    //     $campos['valor_titulo']                             = array(127,139, '9:13',$valor_titulo);
+    //     $campos['banco_encarregado_cobranca']               = array(140,142, '9:3',$banco_encarregado_cobranca);
+    //     $campos['agencia_depositaria']                      = array(143,147, '9:5',$agencia_depositaria);
+    //     $campos['identificacao']                            = array(150,150, 'X:1',$identificacao);
+    //     $campos['data_emissao_titulo']                      = array(151,156, '9:6',$data_emissao_titulo);
+    //     $campos['instrucao1']                               = array(157,158, '9:2',$instrucao1);
+    //     $campos['instrucao2']                               = array(159,160, '9:2',$instrucao2);
+    //     $campos['valor_cobrado_dia_atraso']                 = array(161,173, '9:13',$valor_cobrado_dia_atraso);
+    //     $campos['data_limite_concessao_desconto']           = array(174,179, '9:6',$data_limite_concessao_desconto);
+    //     $campos['valor_desconto']                           = array(180,192,'9:13',$valor_desconto);
+    //     $campos['valor_iof']                                = array(193,205,'9:13',$valor_iof);
+    //     $campos['valor_abatimento']                         = array(206,218,'9:13',$valor_abatimento);
+    //     $campos['id_tipo_inscricao_pagador']                = array(219,220,'9:2',$id_tipo_inscricao_pagador);
+    //     $campos['num_inscricao_pagador']                    = array(221,234,'9:14',$num_inscricao_pagador);
+    //     $campos['nome_pagador']                             = array(237,274,'X:40',$nome_pagador);
+    //     $campos['endereco_completo']                        = array(275,314,'X:40',$endereco_completo);
+    //     $campos['mensagem1']                                = array(315,326,'X:12',$mensagem1);
+    //     $campos['cep']                                      = array(327,331,'9:5',$cep);
+    //     $campos['sufixo_cep']                               = array(332,334,'9:3',$sufixo_cep);
+    //     $campos['beneficiário_final']                       = array(335,394,'X:60',$beneficiário_final);
+    //     $campos['num_sequencial_registro']                  = array(395,400, '9:6',$num_sequencial_registro);
+
+    //     return bradescoDebAuto400LayoutCNAB::FormatarCampos($campos);
+
+    // }
+
+
+    public static function Registro9($cfg) // Registro 9 - Trailer (conf layout para última linha do arquivo)
     {
 
-        $cod_registro 						                = isset($cfg['cod_registro']) ? $cfg['cod_registro'] :' ';
-        $reservado_futuro_Z                                 = isset($cfg['reservado_futuro_Z']) ? $cfg['reservado_futuro_Z'] : ' ';
+        $cod_registro4 						                = isset($cfg['cod_registro4']) ? $cfg['cod_registro4'] :' ';
+        $reservado_futuro_9                                 = isset($cfg['reservado_futuro_9']) ? $cfg['reservado_futuro_9'] : ' ';
         $num_sequencial_registro                            = isset($cfg['num_sequencial_registro']) ? $cfg['num_sequencial_registro'] : ' ';
 
         $campos                                             = array();
-        $campos['cod_registro']                             = array(1,1, '9:1', $cod_registro);
-        $campos['reservado_futuro_Z']                       = array(2,394, 'X:393',$reservado_futuro_Z);
+        $campos['cod_registro4']                            = array(1,1, '9:1', $cod_registro4);
+        $campos['reservado_futuro_9']                       = array(2,394, 'X:393',$reservado_futuro_9);
         $campos['num_sequencial_registro']                  = array(395,400, '9:6',$num_sequencial_registro);
 
         return bradescoDebAuto400LayoutCNAB::FormatarCampos($campos);
@@ -201,7 +206,7 @@ class bradescoDebAuto400LayoutCNAB{
 	public static function FormatarCampos($campos)
 	{
 
-		$RegistroA      = ''; //String do Registro A
+		$Registro0      = ''; //String do Registro A
 		$permiteBrancos = array('reservado_futuro','uso_empresa'); //Campos que podem ser vazios
 
 		foreach($campos as $index=>$value){
@@ -237,7 +242,7 @@ class bradescoDebAuto400LayoutCNAB{
 						$strCampo = $strValor;
 					}
 
-					$RegistroA .= $strCampo;
+					$Registro0 .= $strCampo;
 
 				} else {
 
@@ -247,7 +252,7 @@ class bradescoDebAuto400LayoutCNAB{
 						$limitaTamanho   = substr($converToString,0,$tamanho); //Força string a caber no tamanho
 						$completaTamanho = str_pad($limitaTamanho,$tamanho, "0", STR_PAD_LEFT); //Completa com espaços caracteres faltantes 
 						$strCampo        = $completaTamanho; 
-						$RegistroA .= $strCampo;
+						$Registro0 .= $strCampo;
 					} else {
 						echo('O campo '.$index.' ('.$strValidacao.') deve conter apenas numeros!');
 					}
@@ -255,7 +260,7 @@ class bradescoDebAuto400LayoutCNAB{
 			}
 		}//Fim foreach
 
-	  	return $RegistroA;
+	  	return $Registro0;
 		
 	}
 	

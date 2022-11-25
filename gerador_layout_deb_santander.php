@@ -60,13 +60,13 @@
 				$condicao2 = $optante == 0 ? "clientes_dados_debito.optante = 0 AND " : "";
 
 				$sql = "SELECT clientes.cpf, convenios_debito_em_conta.cod_convenio, forma_pagamento.dias_antecedencia_cobranca_debito, clientes_dados_debito.agencia_bancaria, clientes_dados_debito.optante , clientes_dados_debito.conta_corrente, negocio_parcelas.*  
-				FROM `negocio_parcelas`
-				INNER JOIN negocios ON negocios.id = negocio_id 
-				INNER JOIN clientes ON negocios.cliente_id = clientes.id
-				INNER JOIN forma_pagamento ON negocios.forma_pagamento = forma_pagamento.id
-				INNER JOIN convenios_debito_em_conta ON forma_pagamento.cod_convenio = convenios_debito_em_conta.id
-				INNER JOIN clientes_dados_debito ON negocios.conta_debito = clientes_dados_debito.id
-				WHERE $condicao $condicao2 negocio_parcelas.vencimento <= '$vencimento'"; 
+                        FROM `negocio_parcelas`
+                        INNER JOIN negocios ON negocios.id = negocio_id 
+                        INNER JOIN clientes ON negocios.cliente_id = clientes.id
+                        INNER JOIN forma_pagamento ON negocios.forma_pagamento = forma_pagamento.id
+                        INNER JOIN convenios_debito_em_conta ON forma_pagamento.cod_convenio = convenios_debito_em_conta.id
+                        INNER JOIN clientes_dados_debito ON negocios.conta_debito = clientes_dados_debito.id
+				        WHERE $condicao $condicao2 negocio_parcelas.vencimento <= '$vencimento'"; 
 				$res = $connection->query($sql);
 
 				// Inicializa variáveis
@@ -103,11 +103,11 @@
                         $inteiro         = 0;
                         $centavos        = '00';
                     }
-
+                    
                     // Preenche Array do Registro E
                     $RegistroE["cod_registro"]          = "E";
                     $RegistroE["id_cliente_empresa"]    = $row->cpf;
-                    $RegistroE["agencia_debito"]        =  $row->agencia_bancaria;
+                    $RegistroE["agencia_debito"]        = $row->agencia_bancaria;
                     $RegistroE["id_cliente_banco"]      = intval($row->conta_corrente);
                     $RegistroE["data_vencimento"]       = $data_vencimento;
                     $RegistroE["valor_debito"]          = $inteiro.$centavos;

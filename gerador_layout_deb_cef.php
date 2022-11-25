@@ -153,7 +153,7 @@
 					fwrite($fp,$content);
 					fclose($fp);
 
-					header("Location: index_cef.php");
+					// header("Location: index_cef.php");
 
 					break;
 
