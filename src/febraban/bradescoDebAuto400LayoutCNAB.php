@@ -96,7 +96,7 @@ class bradescoDebAuto400LayoutCNAB{
         $mensagem1                                          = isset($cfg['mensagem1']) ? $cfg['mensagem1'] : ' ';
         $cep                                                = isset($cfg['cep']) ? $cfg['cep'] : ' ';
         $sufixo_cep                                         = isset($cfg['sufixo_cep']) ? $cfg['sufixo_cep'] : ' ';
-        $beneficiário_final                                 = isset($cfg['beneficiário_final']) ? $cfg['beneficiário_final'] : ' ';
+        $mensagem2                                          = isset($cfg['mensagem2']) ? $cfg['mensagem2'] : ' ';
         $num_sequencial_registro                            = isset($cfg['numero_sequencial_registro']) ? $cfg['numero_sequencial_registro'] : ' ';
         
         $campos = array();
@@ -142,7 +142,7 @@ class bradescoDebAuto400LayoutCNAB{
         $campos['mensagem1']                                = array(315,326,'X:12',$mensagem1);
         $campos['cep']                                      = array(327,331,'9:5',$cep);
         $campos['sufixo_cep']                               = array(332,334,'9:3',$sufixo_cep);
-        $campos['beneficiário_final']                       = array(335,394,'X:60',$beneficiário_final);
+        $campos['mensagem2']                                = array(335,394,'X:60',$mensagem2);
         $campos['num_sequencial_registro']                  = array(395,400, '9:6',$num_sequencial_registro);
 
         return bradescoDebAuto400LayoutCNAB::FormatarCampos($campos);

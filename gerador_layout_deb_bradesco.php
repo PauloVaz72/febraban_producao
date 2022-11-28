@@ -85,8 +85,7 @@
                 $numero_sequencial_registroE = 0;
 				$soma_valores = 0;
                 $conta = strval($row->conta_compromisso);
-                $digito = strval(substr($row->conta_compromisso) -1, 1);
-
+        
                 while($row = $res->fetch_object())
 				{
 					// Atualiza o numero do registro 6 na parcela caso não esteja efetuando o cadastro
@@ -110,13 +109,13 @@
                     
                     // Preenche Array do REGISTRO 1"                    
                     $Registro1["cod_registro1"]                         = 1;
-                    $Registro1["agencia_debito"]                        = $row->agencia_bancaria; // Incluir a Agência sem o dígito do pagador []
-                    $Registro1["digito_agencia_debito"]                 = "X"; // Incluir o dígito da Agência do pagador na posição []
-                    $Registro1["razao_conta_corrente"]                  = 00000; //  
-                    $Registro1["conta_corrente"]                        = 99999; // Incluir a Conta-Corrente sem o dígito do pagador[]
-                    $Registro1["digito_conta_corrente"]                 = "Y"; // Incluir o dígito da Conta-Corrente do pagador []
-                    $Registro1["id_empresa_beneficiaria_banco"]         = "0" . $row->carteira . substr($conta, 1, 7,) . substr($conta, 0, -1) . str_repeat(" ", (7 - strlen($conta))) . $digito; 
-                    $Registro1["num_controle_participante"]             = " " ; // Preencher corretamente depois
+                    $Registro1["agencia_debito"]                        = substr($row->agencia_bancaria, 0, 4); 
+                    $Registro1["digito_agencia_debito"]                 = substr($row->agencia_bancaria, -4, 1);
+                    $Registro1["razao_conta_corrente"]                  = $row->conta_corrente;   
+                    $Registro1["conta_corrente"]                        = substr($row->conta_corrente, 0, 5); 
+                    $Registro1["digito_conta_corrente"]                 = substr($row->conta_corrente, -6, 1);; 
+                    $Registro1["id_empresa_beneficiaria_banco"]         = "0" . $row->carteira . substr($conta, 1, 7,) . substr($conta, 0, -1) . str_repeat(" ", (7 - strlen($conta))) . substr($conta, -1, 1); 
+                    $Registro1["num_controle_participante"]             = " "; 
                     $Registro1["cod_banco_deb_camara_compensacao"]      = 237;
                     $Registro1["campo_multa"]                           = 0;
                     $Registro1["percentual_multa"]                      = 0000;
@@ -151,8 +150,8 @@
                     $Registro1["mensagem1"]                             = " ";
                     $Registro1["cep"]                                   = $row->cep;                                                                         ;
                     $Registro1["sufixo_cep"]                            = substr($row->cep, -3, 3);
-                    $Registro1["beneficiário_final"]                    = ;
-                    $Registro1["num_sequencial_registro"]               = ;
+                    $Registro1["mensagem2"]                             = " ";
+                    $Registro1["num_sequencial_registro"]               = $numero_sequencial_registroE;
                     
                     $content .= bradescoDebAuto400LayoutCNAB::Registro1($Registro1).PHP_EOL;
                     
