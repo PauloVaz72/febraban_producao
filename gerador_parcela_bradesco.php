@@ -3,21 +3,18 @@
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
-      
+
     include('connection.php');
-    
+
     // Pegando apenas o dia da data passada por parâmetro
     $dia     = date('d',strtotime($_GET['data'])); 
 
     // Pegando a data informada por parâmetro
     $data    = date('Ymd',strtotime(substr($_GET['data'],8,2).'-'.substr($_GET['data'],5,2).'-'.substr($_GET['data'],0,4)));
-    
-    // Passando por parâmetro optante
-    $optante = $_GET['optante'];
-
+        
     // Passando por parâmetro cod do convênio
     $convenio = $_GET['convenio'];
-    
+
     if(isset($_GET['convenio']))
     {
         // Busca os dados do convenio
@@ -32,7 +29,7 @@
         $cod_banco = $row->codigo_febraban;
         $convenio  = $row->cod_convenio;
         
-        if($cod_banco == 33)
+        if($cod_banco == 237)
         {
             // Gera parcelas
             while ($dia >= 1)
@@ -49,9 +46,10 @@
                         INNER JOIN convenios_debito_em_conta AS C ON F.id = C.id
                         WHERE N.dia_debito = $dia AND N.status_negocio = 1 AND C.cod_convenio = '$convenio'";
                 $res = $connection->query($sql);
-                
+                var_dump($res->fetch_object());
+                 
                 while($row = $res->fetch_object())
-                {
+                {   
                     $data_original = date('Ymd', strtotime($row->dia_debito. '-' .substr($_GET['data'],5,2). '-' . substr($_GET['data'],0,4)));
                                             
                     // Gera apenas parcelas aonde minha data original (dia + mês + ano) seja maior ou igual a minha data de venda de negócios, evitando cobrança retroativa 
@@ -62,7 +60,7 @@
                         $res2 = $connection->query($sql);
 
                         // Verifica se meu negocio possui parcela
-                        if($res2->lengths == null) 
+                        if($res2->lengths == null)
                         {
                             // Conta meu número de parcelas pelo meu negocio                    
                             $sql  = "SELECT COUNT(*) AS contador FROM negocio_parcelas WHERE negocio_id = $row->negocio";
@@ -74,22 +72,20 @@
                             $numero_parcelas = $row3->contador;
                                                 
                             // Geramos nossa parcela e inserimos os dados no banco
-
-                     
                             $sql  = "INSERT INTO negocio_parcelas (negocio_id, vencimento, valor, total, pagamento_parcelas, numero_parcela, vencimento_original)
-                                     VALUES ($row->negocio, $data, $row->valor_total, $row->valor_total, 0, $numero_parcelas, $data_original)";
+                                    VALUES ($row->negocio, $data, $row->valor_total, $row->valor_total, 0, $numero_parcelas, $data_original)";
                             $res4 = $connection->query($sql);
                                         
                         }
                     } 
                 }
 
-                $dia += -1;
+                $dia+= -1;
 
             } 
         }
     }
-
-     header("Location: index_santander.php");
+    
+    //  header("Location: index_bradesco.php");
 
 ?>

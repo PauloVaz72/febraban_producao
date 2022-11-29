@@ -39,15 +39,15 @@
             {
                 // Consulta negócio pelo dia da data informada, status e convênio
                 $sql = "SELECT N.id AS negocio, 
-                               N.dia_debito AS dia_debito, 
-                               N.data_venda AS data_venda,
-                               N.valor_total AS valor_total,
-                               F.id AS forma_pgto, 
-                               C.id AS convenio 
-                               FROM `negocios` AS N
-                               INNER JOIN forma_pagamento AS F ON N.forma_pagamento = F.id
-                               INNER JOIN convenios_debito_em_conta AS C ON F.id = C.id
-                               WHERE N.dia_debito = $dia AND N.status_negocio = 1 AND C.cod_convenio = '$convenio'";
+                        N.dia_debito AS dia_debito, 
+                        N.data_venda AS data_venda,
+                        N.valor_total AS valor_total,
+                        F.id AS forma_pgto, 
+                        C.id AS convenio 
+                        FROM `negocios` AS N
+                        INNER JOIN forma_pagamento AS F ON N.forma_pagamento = F.id
+                        INNER JOIN convenios_debito_em_conta AS C ON F.id = C.id
+                        WHERE N.dia_debito = $dia AND N.status_negocio = 1 AND C.cod_convenio = '$convenio'";
                 $res = $connection->query($sql);
                
                 while($row = $res->fetch_object())
