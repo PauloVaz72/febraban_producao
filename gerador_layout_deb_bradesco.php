@@ -34,33 +34,32 @@
         switch($cod_banco)
         {
             case 237:
-                // Adiciona 1 ao numero sequencial do arquivo e guarda no convenio
-                $sql = "UPDATE `convenios_debito_em_conta` SET `numero_sequencial_arquivo` = $numero_sequencial_arquivo  WHERE `cod_convenio` = ".$convenio;
-				$res2 = $connection->query($sql);
+                    // Adiciona 1 ao numero sequencial do arquivo e guarda no convenio
+                    $sql = "UPDATE `convenios_debito_em_conta` SET `numero_sequencial_arquivo` = $numero_sequencial_arquivo  WHERE `cod_convenio` = ".$convenio;
+                    $res2 = $connection->query($sql);
 
+                    // REGISTRO 0
+                    $Registro0 = array();
+                    $Registro0["cod_registro0"]                                 = 0;
+                    $Registro0["cod_remessa"]                                   = 1;
+                    $Registro0["literal_remessa"]                               = "REMESSA";
+                    $Registro0["cod_servico"]                                   = 1;
+                    $Registro0["literal_servico"]                               = "COBRANCA";
+                    $Registro0["cod_empresa"]                                   = $row->cod_convenio;
+                    $Registro0["nome_empresa"]                                  = $row->nome_empresa;
+                    $Registro0["num_bradesco_camara_compensacao"]               = 237;
+                    $Registro0["nome_banco_extenso"]                            = "BRADESCO";
+                    $Registro0["data_gravacao_arquivo"]                         = date('dmy');
+                    $Registro0["reservado_futuro"]                              = " ";
+                    $Registro0["id_sistema"]                                    = "MX";
+                    $Registro0["numero_sequencial_arquivo"]                     = $numero_sequencial_arquivo;
+                    $Registro0["reservado_futuro2"]                             = " ";
+                    $Registro0["numero_sequencial_registro"]                    = $row->numero_registro_a;
+                    $content  = '';
+                    $content .= bradescoDebAuto400LayoutCNAB::Registro0($Registro0).PHP_EOL;
 
-                // REGISTRO 0
-                $Registro0 = array();
-                $Registro0["cod_registro0"]                                 = 0;
-                $Registro0["cod_remessa"]                                   = 1;
-                $Registro0["literal_remessa"]                               = "REMESSA";
-                $Registro0["cod_servico"]                                   = 1;
-                $Registro0["literal_servico"]                               = "COBRANCA";
-                $Registro0["cod_empresa"]                                   = $row->cod_convenio;
-                $Registro0["nome_empresa"]                                  = $row->nome_empresa;
-                $Registro0["num_bradesco_camara_compensacao"]               = 237;
-                $Registro0["nome_banco_extenso"]                            = "BRADESCO";
-                $Registro0["data_gravacao_arquivo"]                         = date('dmy');
-                $Registro0["reservado_futuro"]                              = " ";
-                $Registro0["id_sistema"]                                    = "MX";
-                $Registro0["numero_sequencial_arquivo"]                     = $numero_sequencial_arquivo;
-                $Registro0["reservado_futuro2"]                             = " ";
-                $Registro0["numero_sequencial_registro"]                    = $row->numero_registro_a;
-                $content  = '';
-                $content .= bradescoDebAuto400LayoutCNAB::Registro0($Registro0).PHP_EOL;
-
-                // Busca as Parcelas
-                $sql = "SELECT negocio_parcelas.*,
+                    // Busca as Parcelas
+                    $sql = "SELECT negocio_parcelas.*,
                         C.id,
                         C.endereco,
                         C.numero_endereco,
@@ -88,14 +87,17 @@
                         INNER JOIN forma_pagamento as F ON N.forma_pagamento = F.id
                         INNER JOIN convenios_debito_em_conta as V ON F.cod_convenio = V.id
                         WHERE negocio_parcelas.numero_registro_e = 0 AND negocio_parcelas.vencimento <= '$vencimento'"; 
-				$res3 = $connection->query($sql);
-                
-                // Inicializa variáveis
-                $Registro1 = array();
-				$Registro6 = array();
-				$soma_valores = 0;
-                $conta = strval($row->conta_compromisso);
-                $contador_registros = 2;
+				    $res3 = $connection->query($sql);
+
+                    // Inicializa variáveis
+                    $Registro1 = array();
+                    $Registro6 = array();
+                    $soma_valores = 0;
+                    $agencia = $row->agencia;
+                    $conta = substr($row->conta_compromisso, 0, -1);
+                    $digito_conta = substr($row->conta_compromisso, -1);
+                    $contador_registros = 2;
+
 
                 while($row2 = $res3->fetch_object())
 				{
@@ -118,17 +120,20 @@
 					$soma_valores = $soma_valores + $row2->total;
 					$inteiro      = intval($row2->total);
 					$centavos     = substr(number_format($row2->total, 2, ',', '.'), strpos(number_format($row2->total, 2, ',', '.'),',',0)+1, strlen(number_format($row2->total, 2, ',', '.')));	
+                    $formata_vencimento = date('dmy', strtotime($row2->vencimento));
                     
         
                     // Preenche Array do REGISTRO 1"                    
                     $Registro1["cod_registro1"]                         = 1;
-                    $Registro1["agencia_debito"]                        = substr($row2->agencia_bancaria, 0, 4); 
-                    $Registro1["digito_agencia_debito"]                 = substr($row2->agencia_bancaria, -4, 1);
+                    $Registro1["agencia_debito"]                        = $row2->agencia_bancaria; 
                     $Registro1["razao_conta_corrente"]                  = 0;   
-                    $Registro1["conta_corrente"]                        = substr($row2->conta_corrente, 0, 5); 
-                    $Registro1["digito_conta_corrente"]                 = substr($row2->conta_corrente, -6, 1);; 
-                    $Registro1["id_empresa_beneficiaria_banco"]         = "0" . $row2->codigo_carteira . substr($conta, 1, 7,) . substr($conta, 0, -1) . str_repeat(" ", (7 - strlen($conta))) . substr($conta, -1, 1); 
-                    $Registro1["num_controle_participante"]             = " "; 
+                    $Registro1["conta_corrente"]                        = $row2->conta_corrente; 
+                    $Registro1["zero"]                                  = 0;
+                    $Registro1["carteira"]                              = $row->codigo_carteira;
+                    $Registro1["agencia"]                               = $agencia;
+                    $Registro1["conta"]                                 = $conta;
+                    $Registro1["digito_conta"]                          = $digito_conta;
+                    $Registro1["num_controle_participante"]             = $row2->negocio_id; 
                     $Registro1["cod_banco_deb_camara_compensacao"]      = 237;
                     $Registro1["campo_multa"]                           = 0;
                     $Registro1["percentual_multa"]                      = 0;
@@ -143,7 +148,7 @@
                     $Registro1["quantidade_pagamentos"]                 = " ";
                     $Registro1["id_ocorrencia"]                         = 1;
                     $Registro1["num_documento"]                         = " "; 
-                    $Registro1["data_vencimento_titulo"]                = $data_vencimento; 
+                    $Registro1["data_vencimento_titulo"]                = $formata_vencimento;
                     $Registro1["valor_titulo"]                          = $inteiro.$centavos;
                     $Registro1["banco_encarregado_cobranca"]            = 0;
                     $Registro1["agencia_depositaria"]                   = 0;
@@ -164,56 +169,54 @@
                     $Registro1["mensagem1"]                             = $row2->mensagem_cliente;
                     $Registro1["cep"]                                   = $row2->cep == null ? 0 : $row2->cep;                                                                     
                     $Registro1["mensagem2"]                             = " ";
-                    $Registro1["numero_sequencial_registro2"]               = $contador_registros;
+                    $Registro1["numero_sequencial_registro2"]           = $contador_registros;
 
                     $contador_registros += 1;
 
-                    
                     $content .= bradescoDebAuto400LayoutCNAB::Registro1($Registro1).PHP_EOL;
                     
 				    // Preenche Array do REGISTRO 6"
 					$Registro6["cod_registro6"]       			        = 6; 
-                    $Registro6["carteira"]                              = 999; // Preencher depois corretamente
-                    $Registro6["agencia_debito"]                        = $row2->agencia_bancaria;
-                    $Registro6["conta_corrente"]                        = intval($row2->conta_corrente);
-                    $Registro6["numero_bradesco"]                       = 123456789111; // Preencher depois corretamente
-                    $Registro6["digito_numero_bradesco"]                = "X"; // Preencher depois corretamente
+                    $Registro6["carteira"]                              = $row->codigo_carteira; 
+                    $Registro6["agencia_debito"]                        = $agencia;
+                    $Registro6["conta_corrente2"]                       = $conta;
+                    $Registro6["numero_bradesco"]                       = 0; 
+                    $Registro6["digito_numero_bradesco"]                = " "; 
                     $Registro6["tipo_operacao"]                         = 1;
-                    $Registro6["utilizacao_cheque_especial"]            = "N";  // Preencher depois corretamente
-                    $Registro6["consulta_saldo_apos_vencimento"]        = "N"; // Preencher depois corretamente
-                    $Registro6["num_cod_id_contrato"]                   = $row2->negocio_id; // Verificar o tamanho dos espaços
-                    $Registro6["prazo_validade_contrato"]               = 99999999; // Preencher depois corretamente
+                    $Registro6["utilizacao_cheque_especial"]            = "N";  
+                    $Registro6["consulta_saldo_apos_vencimento"]        = "N"; 
+                    $Registro6["num_cod_id_contrato"]                   = $row2->negocio_id; 
+                    $Registro6["prazo_validade_contrato"]               = 999999999; 
                     $Registro6["reservado_futuro_6"]                    = " ";
-                    $Registro6["numero_sequencial_registro3"]               = $contador_registros;
+                    $Registro6["numero_sequencial_registro3"]           = $contador_registros;
 
                     $contador_registros += 1;
 					
 					$content .= bradescoDebAuto400LayoutCNAB::Registro6($Registro6).PHP_EOL;
 				}
 				
+                    // REGISTRO 9
+                    $Registro9 = array();
+                    $Registro9["cod_registro9"]            = 9;
+                    $Registro9["reservado_futuro_9"]       = " ";
+                    $Registro9["numero_sequencial_registro4"]  = $contador_registros; 
+                    $content .= bradescoDebAuto400LayoutCNAB::Registro9($Registro9).PHP_EOL;
 
-                // REGISTRO 9
-                $Registro9 = array();
-                $Registro9["cod_registro9"]            = 9;
-                $Registro9["reservado_futuro_9"]       = " ";
-                $Registro9["numero_sequencial_registro4"]  = $contador_registros + 2; 
-                $content .= bradescoDebAuto400LayoutCNAB::Registro9($Registro9).PHP_EOL;
 
-
-                //Cria o arquivo
-                $nome_arquivo = "CB".date('dm').str_pad($numero_sequencial_arquivo, 2 , '0' , STR_PAD_LEFT).".REM";
-                $fp = fopen($_SERVER['DOCUMENT_ROOT'] ."/$nome_arquivo","wb");
-                fwrite($fp,$content);
-                fclose($fp);
+                    //Cria o arquivo
+                    $nome_arquivo = "CB".date('dm').str_pad($numero_sequencial_arquivo, 2 , '0' , STR_PAD_LEFT).".REM";
+                    $fp = fopen($_SERVER['DOCUMENT_ROOT'] ."/$nome_arquivo","wb");
+                    fwrite($fp,$content);
+                    fclose($fp);
                     
-                // header("Location: index_bradesco.php");
+                    header("Location: index_bradesco.php");
 
-                break;
+                    break;
 
             default:
 					echo 'Layout não encontrado';
 				
                 break;
         }
-    }
+    } 
     

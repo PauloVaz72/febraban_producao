@@ -56,11 +56,13 @@ class bradescoDebAuto400LayoutCNAB{
         //Registro de transação - tipo 1 (conf layout para cobrança)
         $cod_registro1 						                = isset($cfg['cod_registro1']) ? $cfg['cod_registro1'] : ' ';
         $agencia_debito 					                = isset($cfg['agencia_debito']) ? $cfg['agencia_debito'] :' ';
-        $digito_agencia_debito                              = isset($cfg['digito_agencia_debito']) ? $cfg['digito_agencia_debito'] :' ';
         $razao_conta_corrente                               = isset($cfg['razao_conta_corrente']) ? $cfg['razao_conta_corrente'] :' ';
         $conta_corrente                                     = isset($cfg['conta_corrente']) ? $cfg['conta_corrente'] : ' ';
-        $digito_conta_corrente                              = isset($cfg['digito_conta_corrente']) ? $cfg['digito_conta_corrente'] : ' ';
-        $id_empresa_beneficiaria_banco                      = isset($cfg['id_empresa_beneficiaria_banco']) ? $cfg['id_empresa_beneficiaria_banco'] : ' ';
+        $zero                                               = isset($cfg['zero']) ? $cfg['zero'] : ' ';
+        $carteira                                           = isset($cfg['carteira']) ? $cfg['carteira'] : ' ';
+        $agencia                                            = isset($cfg['agencia']) ? $cfg['agencia'] : ' ';
+        $conta                                              = isset($cfg['conta']) ? $cfg['conta'] : ' ';
+        $digito_conta                                       = isset($cfg['digito_conta']) ? $cfg['digito_conta'] : ' ';
         $num_controle_participante                          = isset($cfg['num_controle_participante']) ? $cfg['num_controle_participante'] : ' ';
         $cod_banco_deb_camara_compensacao                   = isset($cfg['cod_banco_deb_camara_compensacao']) ? $cfg['cod_banco_deb_camara_compensacao'] : ' '; 
         $campo_multa                                        = isset($cfg['campo_multa']) ? $cfg['campo_multa'] : ' ';
@@ -101,12 +103,14 @@ class bradescoDebAuto400LayoutCNAB{
         
         $campos = array();
         $campos['cod_registro1']                            = array(1,1, '9:1',$cod_registro1);
-        $campos['agencia_debito']                           = array(2,6, '9:5',$agencia_debito);
-        $campos['digito_agencia_debito']                    = array(7,7, 'X:1',$digito_agencia_debito);
+        $campos['agencia_debito']                           = array(2,6, '9:6',$agencia_debito);
         $campos['razao_conta_corrente']                     = array(8,12, '9:5',$razao_conta_corrente);
-        $campos['conta_corrente']                           = array(13,19, '9:7',$conta_corrente);
-        $campos['digito_conta_corrente']                    = array(20,20, 'X:1',$digito_conta_corrente);
-        $campos['id_empresa_beneficiaria_banco']            = array(21,37, 'X:17',$id_empresa_beneficiaria_banco);
+        $campos['conta_corrente']                           = array(13,19, '9:8',$conta_corrente);
+        $campos['zero']                                     = array(21,21, '9:1',$zero);
+        $campos['carteira']                                 = array(22,24, '9:3',$carteira);
+        $campos['agencia']                                  = array(25,29,'9:5',$agencia);
+        $campos['conta']                                    = array(30,36, 'X:7',$conta);
+        $campos['digito_conta']                             = array(37,37, '9:1',$digito_conta);  
         $campos['num_controle_participante']                = array(38,62, 'X:25',$num_controle_participante);
         $campos['cod_banco_deb_camara_compensacao']         = array(63,65, '9:3',$cod_banco_deb_camara_compensacao);
         $campos['campo_multa']                              = array(66,66, '9:1',$campo_multa);
@@ -156,7 +160,7 @@ class bradescoDebAuto400LayoutCNAB{
         $cod_registro6 					                    = isset($cfg['cod_registro6']) ? $cfg['cod_registro6'] :' ';
         $carteira                                           = isset($cfg['carteira']) ? $cfg['carteira'] : ' ';
         $agencia_debito 					                = isset($cfg['agencia_debito']) ? $cfg['agencia_debito'] :' ';
-        $conta_corrente                                     = isset($cfg['conta_corrente']) ? $cfg['conta_corrente'] : ' ';
+        $conta_corrente2                                     = isset($cfg['conta_corrente2']) ? $cfg['conta_corrente2'] : ' ';
         $numero_bradesco                                    = isset($cfg['numero_bradesco']) ? $cfg['numero_bradesco'] : ' ';
         $digito_numero_bradesco                             = isset($cfg['digito_numero_bradesco']) ? $cfg['digito_numero_bradesco'] : ' ';
         $tipo_operacao                                      = isset($cfg['tipo_operacao']) ? $cfg['tipo_operacao'] : ' ';
@@ -171,7 +175,7 @@ class bradescoDebAuto400LayoutCNAB{
         $campos['cod_registro6']                            = array(1,1, '9:1',$cod_registro6);
         $campos['carteira']                                 = array(2,4, '9:3',$carteira);
         $campos['agencia_debito']                           = array(5,9, '9:5',$agencia_debito);
-        $campos['conta_corrente']                           = array(10,16, '9:7',$conta_corrente);
+        $campos['conta_corrente2']                           = array(10,16, '9:7',$conta_corrente2);
         $campos['numero_bradesco']                          = array(17,27, '9:11',$numero_bradesco);
         $campos['digito_numero_bradesco']                   = array(28,28, 'X:1',$digito_numero_bradesco);
         $campos['tipo_operacao']                            = array(29,29, '9:1',$tipo_operacao);
