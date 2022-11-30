@@ -1,5 +1,4 @@
 <?php
-
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
@@ -7,14 +6,20 @@
     include('connection.php');
 
     // Pegando apenas o dia da data passada por parâmetro
-    $dia     = date('d',strtotime($_GET['data'])); 
+    //$dia = date('d',strtotime($_GET['data']));
 
     // Pegando a data informada por parâmetro
-    $data    = date('Y-m-d',strtotime(substr($_GET['data'],8,2).'-'.substr($_GET['data'],5,2).'-'.substr($_GET['data'],0,4)));
+    $data = $_GET['data'];
+
+    $arruma_data = explode('-',$data);
+        
+    $dia         = $arruma_data[2];
+    $mes         = $arruma_data[1];
+    $ano         = $arruma_data[0];
         
     // Passando por parâmetro cod do convênio
     $convenio = $_GET['convenio'];
-
+        
     if(isset($_GET['convenio']))
     {
         // Busca os dados do convenio
@@ -28,11 +33,11 @@
         $row       = $res->fetch_object();
         $cod_banco = $row->codigo_febraban;
         $convenio  = $row->cod_convenio;
-        
+       
         if($cod_banco == 237)
         {
             // Gera parcelas
-            while ($dia >= 1)
+            while($dia >= 1)
             {
                 // Consulta negócio pelo dia da data informada, status e convênio
                 $sql = "SELECT N.id AS negocio, 
@@ -49,8 +54,11 @@
                  
                 while($row2 = $res2->fetch_object())
                 {   
-                    $data_original = date('Y-m-d', strtotime($row2->dia_debito . '-' . substr($_GET['data'],5,2). '-' . substr($_GET['data'],0,4)));
-               
+                    $dia_data_original = $row2->dia_debito;
+                    
+                    $data_original = date_create($ano . '-' . $mes. '-' . $dia_data_original);
+                    $data_original = date_format($data_original, "Y-m-d");                    
+                    
                     // Gera apenas parcelas aonde minha data original (dia + mês + ano) seja maior ou igual a minha data de venda de negócios, evitando cobrança retroativa 
                     if($data_original >= $row2->data_venda)
                     { 
@@ -58,8 +66,10 @@
                         $sql  = "SELECT id FROM negocio_parcelas WHERE negocio_id = $row2->negocio AND vencimento_original = '$data_original'";
                         $res3 = $connection->query($sql);
                         
+                        $result = $res3->fetch_object();
+
                         // Verifica se meu negocio possui parcela
-                        if($res3->lengths == null)
+                        if(empty($result))
                         {
                             // Conta meu número de parcelas pelo meu negocio                    
                             $sql  = "SELECT COUNT(*) AS contador FROM negocio_parcelas WHERE negocio_id = $row2->negocio";
@@ -68,21 +78,18 @@
                             $row3 = $res4->fetch_object();
 
                             // Acrescenta sempre uma parcela pelo meu contador gerado a partir do negocio 
-                            $numero_parcelas = $row3->contador;
+                            $numero_parcelas = $row3->contador + 1;
                                   
                             // Geramos nossa parcela e inserimos os dados no banco
-                            
-                            $sql  = "INSERT INTO negocio_parcelas (negocio_id, vencimento, valor, total, pagamento_parcelas, numero_parcela, vencimento_original)
-                                     VALUES ($row2->negocio, $data, $row2->valor_total, $row2->valor_total, 0, $numero_parcelas, $data_original)";
+                            $sql  = "INSERT INTO negocio_parcelas (negocio_id, vencimento, valor, total, numero_parcela, vencimento_original)
+                                     VALUES ($row2->negocio, '$data', $row2->valor_total, $row2->valor_total, $numero_parcelas, '$data_original')";
                             $res4 = $connection->query($sql);
-                            var_dump($sql);
-                            exit();
+            
                         }
-                    } 
+                    }
+
+                    $dia+= -1;
                 }
-
-                $dia+= -1;
-
             } 
         }
     }

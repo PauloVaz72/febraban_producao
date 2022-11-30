@@ -12,7 +12,6 @@
     // Recebendo por parâmetro de url o cod do convenio e data de vencimento
     $convenio   = $_GET['convenio'];
 
-
     $vencimento = date('Y-m-d',strtotime($_GET['data']));
 
 
@@ -25,19 +24,28 @@
                 ON bancos.id = convenios_debito_em_conta.banco_id	
                 WHERE `cod_convenio` = ".$convenio;
         $res       = $connection->query($sql);
-        
         $row       = $res->fetch_object();
+        
+        // Inicializa variáveis
+        $Registro1 = array();
+        $Registro6 = array();
+        $soma_valores = 0;
+        $agencia = $row->agencia;
+        $conta = substr($row->conta_compromisso, 0, -1);
+        $digito_conta = substr($row->conta_compromisso, -1);
+        $contador_registros = 2;
         $cod_banco = $row->codigo_febraban;
         $convenio  = $row->cod_convenio;	
         $numero_sequencial_arquivo = $row->numero_sequencial_arquivo  + 1;
-
+        
         switch($cod_banco)
         {
             case 237:
-                    // Adiciona 1 ao numero sequencial do arquivo e guarda no convenio
+                
+                // Adiciona 1 ao numero sequencial do arquivo e guarda no convenio
                     $sql = "UPDATE `convenios_debito_em_conta` SET `numero_sequencial_arquivo` = $numero_sequencial_arquivo  WHERE `cod_convenio` = ".$convenio;
                     $res2 = $connection->query($sql);
-
+                    
                     // REGISTRO 0
                     $Registro0 = array();
                     $Registro0["cod_registro0"]                                 = 0;
@@ -57,7 +65,7 @@
                     $Registro0["numero_sequencial_registro"]                    = $row->numero_registro_a;
                     $content  = '';
                     $content .= bradescoDebAuto400LayoutCNAB::Registro0($Registro0).PHP_EOL;
-
+                    
                     // Busca as Parcelas
                     $sql = "SELECT negocio_parcelas.*,
                         C.id,
@@ -89,17 +97,6 @@
                         WHERE negocio_parcelas.numero_registro_e = 0 AND negocio_parcelas.vencimento <= '$vencimento'"; 
 				    $res3 = $connection->query($sql);
 
-                    // Inicializa variáveis
-                    $Registro1 = array();
-                    $Registro6 = array();
-                    $soma_valores = 0;
-                    $agencia = $row->agencia;
-                    $conta = substr($row->conta_compromisso, 0, -1);
-                    $digito_conta = substr($row->conta_compromisso, -1);
-                    $contador_registros = 2;
-                    
-
-
                 while($row2 = $res3->fetch_object())
 				{
                     $converte_cep = intval($row2->cep);
@@ -124,7 +121,6 @@
 					$centavos     = substr(number_format($row2->total, 2, ',', '.'), strpos(number_format($row2->total, 2, ',', '.'),',',0)+1, strlen(number_format($row2->total, 2, ',', '.')));	
                     $formata_vencimento = date('dmy', strtotime($row2->vencimento));
                     
-        
                     // Preenche Array do REGISTRO 1"                    
                     $Registro1["cod_registro1"]                         = 1;
                     $Registro1["agencia_debito"]                        = $row2->agencia_bancaria; 
@@ -139,10 +135,10 @@
                     $Registro1["cod_banco_deb_camara_compensacao"]      = 237;
                     $Registro1["campo_multa"]                           = 0;
                     $Registro1["percentual_multa"]                      = 0;
-                    $Registro1["id_titulo_banco"]                       = " ";
-                    $Registro1["digito_autoconferencia_num_bancario"]   = " ";
+                    $Registro1["id_titulo_banco"]                       = 0;
+                    $Registro1["digito_autoconferencia_num_bancario"]   = 0;
                     $Registro1["desconto_bonificacao_dia"]              = 0;
-                    $Registro1["condicao_emissao_papeleta_cobranca"]    = " ";
+                    $Registro1["condicao_emissao_papeleta_cobranca"]    = 1;
                     $Registro1["ident_emite_boleto_deb_auto"]           = "N";
                     $Registro1["id_operacao_banco"]                     = " ";
                     $Registro1["id_rateio_credito"]                     = " ";
@@ -183,8 +179,8 @@
                     $Registro6["agencia_debito"]                        = $agencia;
                     $Registro6["conta_corrente2"]                       = $conta;
                     $Registro6["numero_bradesco"]                       = 0; 
-                    $Registro6["digito_numero_bradesco"]                = " "; 
-                    $Registro6["tipo_operacao"]                         = 1;
+                    $Registro6["digito_numero_bradesco"]                = 0; 
+                    $Registro6["tipo_operacao"]                         = 0;
                     $Registro6["utilizacao_cheque_especial"]            = "N";  
                     $Registro6["consulta_saldo_apos_vencimento"]        = "N"; 
                     $Registro6["num_cod_id_contrato"]                   = $row2->negocio_id; 

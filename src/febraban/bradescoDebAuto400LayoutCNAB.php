@@ -115,10 +115,10 @@ class bradescoDebAuto400LayoutCNAB{
         $campos['cod_banco_deb_camara_compensacao']         = array(63,65, '9:3',$cod_banco_deb_camara_compensacao);
         $campos['campo_multa']                              = array(66,66, '9:1',$campo_multa);
         $campos['percentual_multa']                         = array(67,70, '9:4',$percentual_multa);
-        $campos['id_titulo_banco']                          = array(71,81, 'X:11',$id_titulo_banco);
-        $campos['digito_autoconferencia_num_bancario']      = array(82,82, 'X:1',$digito_autoconferencia_num_bancario);
+        $campos['id_titulo_banco']                          = array(71,81, '9:11',$id_titulo_banco);
+        $campos['digito_autoconferencia_num_bancario']      = array(82,82, '9:1',$digito_autoconferencia_num_bancario);
         $campos['desconto_bonificacao_dia']                 = array(83,92, '9:10',$desconto_bonificacao_dia);
-        $campos['condicao_emissao_papeleta_cobranca']       = array(93,93, 'X:1',$condicao_emissao_papeleta_cobranca);
+        $campos['condicao_emissao_papeleta_cobranca']       = array(93,93, '9:1',$condicao_emissao_papeleta_cobranca);
         $campos['ident_emite_boleto_deb_auto']              = array(94,94, 'X:1',$ident_emite_boleto_deb_auto);
         $campos['id_operacao_banco']                        = array(95,104, 'X:10',$id_operacao_banco);
         $campos['id_rateio_credito']                        = array(105,105, 'X:1',$id_rateio_credito);
@@ -177,7 +177,7 @@ class bradescoDebAuto400LayoutCNAB{
         $campos['agencia_debito']                           = array(5,9, '9:5',$agencia_debito);
         $campos['conta_corrente2']                           = array(10,16, '9:7',$conta_corrente2);
         $campos['numero_bradesco']                          = array(17,27, '9:11',$numero_bradesco);
-        $campos['digito_numero_bradesco']                   = array(28,28, 'X:1',$digito_numero_bradesco);
+        $campos['digito_numero_bradesco']                   = array(28,28, '9:1',$digito_numero_bradesco);
         $campos['tipo_operacao']                            = array(29,29, '9:1',$tipo_operacao);
         $campos['utilizacao_cheque_especial']               = array(30,30, 'X:1',$utilizacao_cheque_especial);
         $campos['consulta_saldo_apos_vencimento']           = array(31,31, 'X:1',$consulta_saldo_apos_vencimento);
