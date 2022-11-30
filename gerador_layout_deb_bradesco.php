@@ -97,10 +97,12 @@
                     $conta = substr($row->conta_compromisso, 0, -1);
                     $digito_conta = substr($row->conta_compromisso, -1);
                     $contador_registros = 2;
+                    
 
 
                 while($row2 = $res3->fetch_object())
 				{
+                    $converte_cep = intval($row2->cep);
                     $reg_vencimento = str_replace('-', '', $row2->vencimento);
                  
                     $reg_venci = str_replace('-', '', $vencimento);
@@ -167,7 +169,7 @@
                     $Registro1["nome_pagador"]                          = $row2->nome . ' ' . $row2->sobrenome;
                     $Registro1["endereco_completo"]                     = $row2->endereco.'-'.$row2->numero_endereco.'-'.$row2->complemento_endereco.'-'.$row2->bairro.'-'.$row2->nome_cidade.'-'.$row2->nome_uf;
                     $Registro1["mensagem1"]                             = $row2->mensagem_cliente;
-                    $Registro1["cep"]                                   = $row2->cep == null ? 0 : $row2->cep;                                                                     
+                    $Registro1["cep"]                                   = $converte_cep;                                                                     
                     $Registro1["mensagem2"]                             = " ";
                     $Registro1["numero_sequencial_registro2"]           = $contador_registros;
 
@@ -199,7 +201,7 @@
                     $Registro9 = array();
                     $Registro9["cod_registro9"]            = 9;
                     $Registro9["reservado_futuro_9"]       = " ";
-                    $Registro9["numero_sequencial_registro4"]  = $contador_registros; 
+                    $Registro9["numero_sequencial_registro3"]  = $contador_registros; 
                     $content .= bradescoDebAuto400LayoutCNAB::Registro9($Registro9).PHP_EOL;
 
 

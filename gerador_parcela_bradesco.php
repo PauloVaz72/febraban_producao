@@ -10,7 +10,7 @@
     $dia     = date('d',strtotime($_GET['data'])); 
 
     // Pegando a data informada por parâmetro
-    $data    = date('Ymd',strtotime(substr($_GET['data'],8,2).'-'.substr($_GET['data'],5,2).'-'.substr($_GET['data'],0,4)));
+    $data    = date('Y-m-d',strtotime(substr($_GET['data'],8,2).'-'.substr($_GET['data'],5,2).'-'.substr($_GET['data'],0,4)));
         
     // Passando por parâmetro cod do convênio
     $convenio = $_GET['convenio'];
@@ -43,39 +43,40 @@
                         C.id AS convenio 
                         FROM `negocios` AS N
                         INNER JOIN forma_pagamento AS F ON N.forma_pagamento = F.id
-                        INNER JOIN convenios_debito_em_conta AS C ON F.id = C.id
-                        WHERE N.dia_debito = $dia AND N.status_negocio = 1 AND C.cod_convenio = '$convenio'";
-                $res = $connection->query($sql);
-                var_dump($res->fetch_object());
+                        INNER JOIN convenios_debito_em_conta AS C ON F.cod_convenio = C.id
+                        WHERE N.dia_debito = $dia AND N.status_negocio = 1 AND C.cod_convenio = $convenio";
+                $res2 = $connection->query($sql);
                  
-                while($row = $res->fetch_object())
+                while($row2 = $res2->fetch_object())
                 {   
-                    $data_original = date('Ymd', strtotime($row->dia_debito. '-' .substr($_GET['data'],5,2). '-' . substr($_GET['data'],0,4)));
-                                            
+                    $data_original = date('Y-m-d', strtotime($row2->dia_debito . '-' . substr($_GET['data'],5,2). '-' . substr($_GET['data'],0,4)));
+               
                     // Gera apenas parcelas aonde minha data original (dia + mês + ano) seja maior ou igual a minha data de venda de negócios, evitando cobrança retroativa 
-                    if($data_original >= $row->data_venda)
+                    if($data_original >= $row2->data_venda)
                     { 
                         // Se possui meu negocio ele busca na data de vencimento informada
-                        $sql  = "SELECT id FROM negocio_parcelas WHERE negocio_id = $row->negocio AND vencimento_original = '$data_original'";
-                        $res2 = $connection->query($sql);
-
+                        $sql  = "SELECT id FROM negocio_parcelas WHERE negocio_id = $row2->negocio AND vencimento_original = '$data_original'";
+                        $res3 = $connection->query($sql);
+                        
                         // Verifica se meu negocio possui parcela
-                        if($res2->lengths == null)
+                        if($res3->lengths == null)
                         {
                             // Conta meu número de parcelas pelo meu negocio                    
-                            $sql  = "SELECT COUNT(*) AS contador FROM negocio_parcelas WHERE negocio_id = $row->negocio";
-                            $res3 = $connection->query($sql);
+                            $sql  = "SELECT COUNT(*) AS contador FROM negocio_parcelas WHERE negocio_id = $row2->negocio";
+                            $res4 = $connection->query($sql);
 
-                            $row3 = $res3->fetch_object();
+                            $row3 = $res4->fetch_object();
 
                             // Acrescenta sempre uma parcela pelo meu contador gerado a partir do negocio 
                             $numero_parcelas = $row3->contador;
-                                                
+                                  
                             // Geramos nossa parcela e inserimos os dados no banco
+                            
                             $sql  = "INSERT INTO negocio_parcelas (negocio_id, vencimento, valor, total, pagamento_parcelas, numero_parcela, vencimento_original)
-                                    VALUES ($row->negocio, $data, $row->valor_total, $row->valor_total, 0, $numero_parcelas, $data_original)";
+                                     VALUES ($row2->negocio, $data, $row2->valor_total, $row2->valor_total, 0, $numero_parcelas, $data_original)";
                             $res4 = $connection->query($sql);
-                                        
+                            var_dump($sql);
+                            exit();
                         }
                     } 
                 }

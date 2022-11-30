@@ -35,7 +35,7 @@ class bradescoDebAuto400LayoutCNAB{
         $campos['literal_remessa']                          = array(3,9, 'X:7',$literal_remessa);
         $campos['cod_servico']                              = array(10,11, '9:2',$cod_servico);
         $campos['literal_servico']                          = array(12,26, 'X:15',$literal_servico);
-        $campos['cod_empresa']                              = array(27,46, 'X:20',$cod_empresa);
+        $campos['cod_empresa']                              = array(27,46, '9:20',$cod_empresa);
         $campos['nome_empresa']                             = array(47,76, 'X:30',$nome_empresa);
         $campos['num_bradesco_camara_compensacao']          = array(77,79, '9:3',$num_bradesco_camara_compensacao);
         $campos['nome_banco_extenso']                       = array(80,94, 'X:15',$nome_banco_extenso);
@@ -109,7 +109,7 @@ class bradescoDebAuto400LayoutCNAB{
         $campos['zero']                                     = array(21,21, '9:1',$zero);
         $campos['carteira']                                 = array(22,24, '9:3',$carteira);
         $campos['agencia']                                  = array(25,29,'9:5',$agencia);
-        $campos['conta']                                    = array(30,36, 'X:7',$conta);
+        $campos['conta']                                    = array(30,36, '9:7',$conta);
         $campos['digito_conta']                             = array(37,37, '9:1',$digito_conta);  
         $campos['num_controle_participante']                = array(38,62, 'X:25',$num_controle_participante);
         $campos['cod_banco_deb_camara_compensacao']         = array(63,65, '9:3',$cod_banco_deb_camara_compensacao);
@@ -184,7 +184,7 @@ class bradescoDebAuto400LayoutCNAB{
         $campos['num_cod_id_contrato']                      = array(32,57, '9:25',$num_cod_id_contrato);
         $campos['prazo_validade_contrato']                  = array(58,65, '9:8',$prazo_validade_contrato);
         $campos['reservado_futuro_6']                       = array(66,395, 'X:330',$reservado_futuro_6);
-        $campos['numero_sequencial_registro3']                  = array(396,400, '9:5',$numero_sequencial_registro3);
+        $campos['numero_sequencial_registro3']              = array(396,400, '9:6',$numero_sequencial_registro3);
 
         return bradescoDebAuto400LayoutCNAB::FormatarCampos($campos);
     }
@@ -195,12 +195,12 @@ class bradescoDebAuto400LayoutCNAB{
         // Registro 9 - Trailer (conf layout para última linha do arquivo)
         $cod_registro9 						                = isset($cfg['cod_registro9']) ? $cfg['cod_registro9'] :' ';
         $reservado_futuro_9                                 = isset($cfg['reservado_futuro_9']) ? $cfg['reservado_futuro_9'] : ' ';
-        $numero_sequencial_registro4                            = isset($cfg['numero_sequencial_registro4']) ? $cfg['numero_sequencial_registro4'] : ' ';
+        $numero_sequencial_registro3                        = isset($cfg['numero_sequencial_registro3']) ? $cfg['numero_sequencial_registro3'] : ' ';
 
         $campos                                             = array();
         $campos['cod_registro9']                            = array(1,1, '9:1', $cod_registro9);
         $campos['reservado_futuro_9']                       = array(2,394, 'X:393',$reservado_futuro_9);
-        $campos['numero_sequencial_registro4']                  = array(395,400, '9:6',$numero_sequencial_registro4);
+        $campos['numero_sequencial_registro3']              = array(395,400, '9:6',$numero_sequencial_registro3);
 
         return bradescoDebAuto400LayoutCNAB::FormatarCampos($campos);
 

@@ -1,7 +1,7 @@
 <?php
-define ('HOST','localhost');
-define ('USER','root');
-define ('PASS','16062001');
-define ('BASE','intranet');     
+define ('HOST','mysql.intranetfuturo.com.br');
+define ('USER','intranetfuturo04');
+define ('PASS','Futuro2022');
+define ('BASE','intranetfuturo04');     
 
 $connection = new mysqli(HOST, USER, PASS, BASE); 
