@@ -160,7 +160,7 @@ class bradescoDebAuto400LayoutCNAB{
         $cod_registro6 					                    = isset($cfg['cod_registro6']) ? $cfg['cod_registro6'] :' ';
         $carteira                                           = isset($cfg['carteira']) ? $cfg['carteira'] : ' ';
         $agencia_debito 					                = isset($cfg['agencia_debito']) ? $cfg['agencia_debito'] :' ';
-        $conta_corrente2                                     = isset($cfg['conta_corrente2']) ? $cfg['conta_corrente2'] : ' ';
+        $conta_corrente2                                    = isset($cfg['conta_corrente2']) ? $cfg['conta_corrente2'] : ' ';
         $numero_bradesco                                    = isset($cfg['numero_bradesco']) ? $cfg['numero_bradesco'] : ' ';
         $digito_numero_bradesco                             = isset($cfg['digito_numero_bradesco']) ? $cfg['digito_numero_bradesco'] : ' ';
         $tipo_operacao                                      = isset($cfg['tipo_operacao']) ? $cfg['tipo_operacao'] : ' ';

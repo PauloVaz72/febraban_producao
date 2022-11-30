@@ -112,9 +112,10 @@
                         $data_vencimento = str_replace('-', '', $row2->vencimento);
 					}
                     
-					$sql  = "UPDATE `negocio_parcelas` SET `numero_registro_e` = ". $contador_registros .", vencimento = ".$data_vencimento." WHERE `id` = ".$row2->id;
+					$sql  = "UPDATE `negocio_parcelas` SET `numero_registro_e` = ". $contador_registros .", vencimento = ".$data_vencimento.",`num_sequencial_arquivo_debito` = ". $numero_sequencial_arquivo." WHERE `negocio_id` = ".$row2->negocio_id;
 					$res4 = $connection->query($sql);
                     
+
 					// Soma e Formata o valor da parcela
 					$soma_valores = $soma_valores + $row2->total;
 					$inteiro      = intval($row2->total);
@@ -199,7 +200,6 @@
                     $Registro9["reservado_futuro_9"]       = " ";
                     $Registro9["numero_sequencial_registro3"]  = $contador_registros; 
                     $content .= bradescoDebAuto400LayoutCNAB::Registro9($Registro9).PHP_EOL;
-
 
                     //Cria o arquivo
                     $nome_arquivo = "CB".date('dm').str_pad($numero_sequencial_arquivo, 2 , '0' , STR_PAD_LEFT).".REM";
