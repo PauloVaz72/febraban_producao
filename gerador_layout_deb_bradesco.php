@@ -27,16 +27,16 @@
         $row = $res->fetch_object();
         
         // Inicializa variáveis
-        $Registro1 = array();
-        $Registro6 = array();
-        $soma_valores = 0;
-        $agencia = $row->agencia;
-        $conta = substr($row->conta_compromisso, 0, -1);
-        $digito_conta = substr($row->conta_compromisso, -1);
-        $contador_registros = 2;
-        $cod_banco = $row->codigo_febraban;
-        $convenio  = $row->cod_convenio;	
-        $numero_sequencial_arquivo = $row->numero_sequencial_arquivo  + 1;
+        $Registro1                  = array();
+        $Registro6                  = array();
+        $soma_valores               = 0;
+        $agencia                    = $row->agencia;
+        $conta                      = substr($row->conta_compromisso, 0, -1);
+        $digito_conta               = substr($row->conta_compromisso, -1);
+        $contador_registros         = 2;
+        $cod_banco                  = $row->codigo_febraban;
+        $convenio                   = $row->cod_convenio;	
+        $numero_sequencial_arquivo  = $row->numero_sequencial_arquivo  + 1;
         
         switch($cod_banco)
         {
@@ -63,7 +63,9 @@
                     $Registro0["numero_sequencial_arquivo"]                     = $numero_sequencial_arquivo;
                     $Registro0["reservado_futuro2"]                             = " ";
                     $Registro0["numero_sequencial_registro"]                    = $row->numero_registro_a;
+                    
                     $content  = '';
+
                     $content .= bradescoDebAuto400LayoutCNAB::Registro0($Registro0).PHP_EOL;
                     
                     // Busca as Parcelas
@@ -99,7 +101,7 @@
 
                 while($row2 = $res3->fetch_object())
 				{
-                    $converte_cep = intval($row2->cep);
+                    $converte_cep   = intval($row2->cep);
                     $reg_vencimento = str_replace('-', '', $row2->vencimento);
                  
                     $reg_venci = str_replace('-', '', $vencimento);
@@ -120,13 +122,27 @@
 					$soma_valores = $soma_valores + $row2->total;
 					$inteiro      = intval($row2->total);
 					$centavos     = substr(number_format($row2->total, 2, ',', '.'), strpos(number_format($row2->total, 2, ',', '.'),',',0)+1, strlen(number_format($row2->total, 2, ',', '.')));	
+                    
                     $formata_vencimento = date('dmy', strtotime($row2->vencimento));
+
+                    $Limpa_campo_conta_corrente =   [
+                                                        'A', 'a', 'B', 'b', 'C', 'c',
+                                                        'D', 'd', 'E', 'e', 'F', 'f',
+                                                        'G', 'g', 'H', 'h', 'I', 'i',
+                                                        'J', 'j', 'K', 'k', 'L', 'l',
+                                                        'M', 'm', 'N', 'n', 'O', 'o',
+                                                        'P', 'p', 'Q', 'q', 'R', 'r',
+                                                        'S', 's', 'T', 't', 'U', 'u',
+                                                        'V', 'v', 'W', 'w', 'X', 'x',
+                                                        'Y', 'y', 'Z', 'z'
+                                                    ];   
+
                     
                     // Preenche Array do REGISTRO 1"                    
                     $Registro1["cod_registro1"]                         = 1;
                     $Registro1["agencia_debito"]                        = intval(str_replace(" ","",$row2->agencia_bancaria)); 
                     $Registro1["razao_conta_corrente"]                  = 0;   
-                    $Registro1["conta_corrente"]                        = $row2->conta_corrente; 
+                    $Registro1["conta_corrente"]                        = intval(str_replace($Limpa_campo_conta_corrente, 0 , $row2->conta_corrente)); 
                     $Registro1["zero"]                                  = 0;
                     $Registro1["carteira"]                              = $row2->codigo_carteira;
                     $Registro1["agencia"]                               = $agencia;
