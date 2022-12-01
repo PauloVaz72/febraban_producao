@@ -103,7 +103,7 @@ class bradescoDebAuto400LayoutCNAB{
         
         $campos = array();
         $campos['cod_registro1']                            = array(1,1, '9:1',$cod_registro1);
-        $campos['agencia_debito']                           = array(2,6, '9:6',$agencia_debito);
+        $campos['agencia_debito']                           = array(2,7, '9:6',$agencia_debito);
         $campos['razao_conta_corrente']                     = array(8,12, '9:5',$razao_conta_corrente);
         $campos['conta_corrente']                           = array(13,19, '9:8',$conta_corrente);
         $campos['zero']                                     = array(21,21, '9:1',$zero);

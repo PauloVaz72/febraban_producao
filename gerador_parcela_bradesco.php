@@ -94,6 +94,6 @@
         }
     }
     
-    //  header("Location: index_bradesco.php");
+     header("Location: index_bradesco.php");
 
 ?>

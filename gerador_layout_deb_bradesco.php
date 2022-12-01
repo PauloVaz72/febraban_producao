@@ -124,11 +124,11 @@
                     
                     // Preenche Array do REGISTRO 1"                    
                     $Registro1["cod_registro1"]                         = 1;
-                    $Registro1["agencia_debito"]                        = $row2->agencia_bancaria; 
+                    $Registro1["agencia_debito"]                        = intval(str_replace(" ","",$row2->agencia_bancaria)); 
                     $Registro1["razao_conta_corrente"]                  = 0;   
                     $Registro1["conta_corrente"]                        = $row2->conta_corrente; 
                     $Registro1["zero"]                                  = 0;
-                    $Registro1["carteira"]                              = $row->codigo_carteira;
+                    $Registro1["carteira"]                              = $row2->codigo_carteira;
                     $Registro1["agencia"]                               = $agencia;
                     $Registro1["conta"]                                 = $conta;
                     $Registro1["digito_conta"]                          = $digito_conta;
@@ -151,7 +151,7 @@
                     $Registro1["valor_titulo"]                          = $inteiro.$centavos;
                     $Registro1["banco_encarregado_cobranca"]            = 0;
                     $Registro1["agencia_depositaria"]                   = 0;
-                    $Registro1["especie_titulo"]                        = 33;
+                    $Registro1["especie_titulo"]                        = 99;
                     $Registro1["identificacao"]                         = "N";
                     $Registro1["data_emissao_titulo"]                   = date('dmy');
                     $Registro1["instrucao1"]                            = 0;
@@ -163,7 +163,7 @@
                     $Registro1["valor_abatimento"]                      = 0;
                     $Registro1["id_tipo_inscricao_pagador"]             = 01;
                     $Registro1["num_inscricao_pagador"]                 = 00001 . $row2->cpf;  
-                    $Registro1["nome_pagador"]                          = $row2->nome . ' ' . $row2->sobrenome;
+                    $Registro1["nome_pagador"]                          = trim($row2->nome) . ' ' . trim($row2->sobrenome);
                     $Registro1["endereco_completo"]                     = $row2->endereco.'-'.$row2->numero_endereco.'-'.$row2->complemento_endereco.'-'.$row2->bairro.'-'.$row2->nome_cidade.'-'.$row2->nome_uf;
                     $Registro1["mensagem1"]                             = $row2->mensagem_cliente;
                     $Registro1["cep"]                                   = $converte_cep;                                                                     
@@ -181,7 +181,7 @@
                     $Registro6["conta_corrente2"]                       = $conta;
                     $Registro6["numero_bradesco"]                       = 0; 
                     $Registro6["digito_numero_bradesco"]                = 0; 
-                    $Registro6["tipo_operacao"]                         = 0;
+                    $Registro6["tipo_operacao"]                         = 3;
                     $Registro6["utilizacao_cheque_especial"]            = "N";  
                     $Registro6["consulta_saldo_apos_vencimento"]        = "N"; 
                     $Registro6["num_cod_id_contrato"]                   = $row2->negocio_id; 
@@ -199,6 +199,7 @@
                     $Registro9["cod_registro9"]            = 9;
                     $Registro9["reservado_futuro_9"]       = " ";
                     $Registro9["numero_sequencial_registro3"]  = $contador_registros; 
+
                     $content .= bradescoDebAuto400LayoutCNAB::Registro9($Registro9).PHP_EOL;
 
                     //Cria o arquivo
@@ -206,7 +207,7 @@
                     $fp = fopen($_SERVER['DOCUMENT_ROOT'] ."/$nome_arquivo","wb");
                     fwrite($fp,$content);
                     fclose($fp);
-                    
+            
                     header("Location: index_bradesco.php");
 
                     break;
