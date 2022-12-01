@@ -23,8 +23,8 @@
                 INNER JOIN bancos
                 ON bancos.id = convenios_debito_em_conta.banco_id	
                 WHERE `cod_convenio` = ".$convenio;
-        $res       = $connection->query($sql);
-        $row       = $res->fetch_object();
+        $res = $connection->query($sql);
+        $row = $res->fetch_object();
         
         // Inicializa variáveis
         $Registro1 = array();

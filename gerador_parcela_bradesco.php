@@ -6,7 +6,6 @@
     include('connection.php');
 
     // Pegando apenas o dia da data passada por parâmetro
-    //$dia = date('d',strtotime($_GET['data']));
 
     // Pegando a data informada por parâmetro
     $data = $_GET['data'];
@@ -87,9 +86,11 @@
             
                         }
                     }
-
+                   
                     $dia+= -1;
+                
                 }
+
             } 
         }
     }
