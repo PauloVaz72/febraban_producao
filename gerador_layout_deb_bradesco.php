@@ -69,7 +69,28 @@
                     $content .= bradescoDebAuto400LayoutCNAB::Registro0($Registro0).PHP_EOL;
                     
                     // Busca as Parcelas
-                    $sql = "SELECT negocio_parcelas.*,
+                    $sql = "SELECT negocio_parcelas.id as parcela,
+                        negocio_parcelas.negocio_id,
+                        negocio_parcelas.documento, 
+                        negocio_parcelas.vencimento,   
+                        negocio_parcelas.valor,   
+                        negocio_parcelas.data_pagamento,  
+                        negocio_parcelas.multa,  
+                        negocio_parcelas.juros,
+                        negocio_parcelas.total, 
+                        negocio_parcelas.pagamento_parcelas,
+                        negocio_parcelas.cod_retorno,  
+                        negocio_parcelas.cod_retorno1,  
+                        negocio_parcelas.cod_retorno2,  
+                        negocio_parcelas.cod_retorno3,
+                        negocio_parcelas.cod_retorno4,
+                        negocio_parcelas.cod_retorno5,  
+                        negocio_parcelas.numero_parcela,   
+                        negocio_parcelas.num_sequencial_arquivo_debito,
+                        negocio_parcelas.numero_registro_e,  
+                        negocio_parcelas.numero_agendamento_cliente,
+                        negocio_parcelas.vencimento_original,
+                        negocio_parcelas.valor_tarifa,
                         C.id,
                         C.endereco,
                         C.numero_endereco,
@@ -137,7 +158,6 @@
                                                         'Y', 'y', 'Z', 'z'
                                                     ];   
 
-                    
                     // Preenche Array do REGISTRO 1"                    
                     $Registro1["cod_registro1"]                         = 1;
                     $Registro1["agencia_debito"]                        = intval(str_replace(" ","",$row2->agencia_bancaria)); 
@@ -148,7 +168,7 @@
                     $Registro1["agencia"]                               = $agencia;
                     $Registro1["conta"]                                 = $conta;
                     $Registro1["digito_conta"]                          = $digito_conta;
-                    $Registro1["num_controle_participante"]             = $row2->negocio_id.'-'.$row->id; 
+                    $Registro1["num_controle_participante"]             = $row2->negocio_id.'-'.$row2->parcela; 
                     $Registro1["cod_banco_deb_camara_compensacao"]      = 237;
                     $Registro1["campo_multa"]                           = 0;
                     $Registro1["percentual_multa"]                      = 0;
@@ -185,7 +205,7 @@
                     $Registro1["cep"]                                   = $converte_cep;                                                                     
                     $Registro1["mensagem2"]                             = " ";
                     $Registro1["numero_sequencial_registro2"]           = $contador_registros;
-
+                
                     $contador_registros += 1;
 
                     $content .= bradescoDebAuto400LayoutCNAB::Registro1($Registro1).PHP_EOL;
