@@ -148,7 +148,7 @@
                     $Registro1["agencia"]                               = $agencia;
                     $Registro1["conta"]                                 = $conta;
                     $Registro1["digito_conta"]                          = $digito_conta;
-                    $Registro1["num_controle_participante"]             = $row2->negocio_id; 
+                    $Registro1["num_controle_participante"]             = $row2->negocio_id.'-'.$row->id; 
                     $Registro1["cod_banco_deb_camara_compensacao"]      = 237;
                     $Registro1["campo_multa"]                           = 0;
                     $Registro1["percentual_multa"]                      = 0;
