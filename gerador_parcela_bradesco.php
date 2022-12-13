@@ -60,7 +60,6 @@
                 while($row2 = $res2->fetch_object())
                 {   
                     $dia_data_original = $row2->dia_debito;
-                    
                     $data_original = date_create($ano . '-' . $mes. '-' . $dia_data_original);
                     $data_original = date_format($data_original, "Y-m-d");                    
                     
@@ -72,35 +71,34 @@
                         $res3 = $connection->query($sql);
                         
                         $result = $res3->fetch_object();
-
+                        
                         // Verifica se meu negocio possui parcela
                         if(empty($result))
                         {
                             // Conta meu número de parcelas pelo meu negocio                    
                             $sql  = "SELECT COUNT(*) AS contador FROM negocio_parcelas WHERE negocio_id = $row2->negocio";
                             $res4 = $connection->query($sql);
-
+                            
                             $row3 = $res4->fetch_object();
-
+                            
                             // Acrescenta sempre uma parcela pelo meu contador gerado a partir do negocio 
                             $numero_parcelas = $row3->contador + 1;
-                                  
+                            
                             // Geramos nossa parcela e inserimos os dados no banco
                             $sql  = "INSERT INTO negocio_parcelas (negocio_id, vencimento, valor, total, numero_parcela, vencimento_original, agencia, banco, conta_corrente, cod_operacao)
                                      VALUES ($row2->negocio, '$data', $row2->valor_total, $row2->valor_total, $numero_parcelas, '$data_original', 
                                     '$row2->agencia_bancaria', '$row2->banco', '$row2->conta_corrente', '$row2->cod_operacao')";
                             $res4 = $connection->query($sql);
-            
+                            
                         }
                     }
-                   
-                    $dia+= -1;
-                
                 }
+
+                $dia += -1;
             } 
         }
     }
     
-     header("Location: index_bradesco.php");
+    //  header("Location: index_bradesco.php");
 
 ?>
