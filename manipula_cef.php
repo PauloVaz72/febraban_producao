@@ -30,14 +30,14 @@ if(isset($_POST['gera_parcela']))
 elseif(isset($_POST['gera_arquivo_optante']))
 {   
     $gera_arquivo_optante = $_POST['gera_arquivo_optante'];
-    $url = 'gerador_layout_deb_cef.php?data=' . $data . '&convenio=' . $convenio . '&' . 'optante=0'.'&codigo_de_operacao='.$codigo_de_operacao;
+    $url = 'gerador_layout_deb_cef.php?data=' . $data . '&convenio=' . $convenio . '&' . 'optante=1'.'&codigo_de_operacao='.$codigo_de_operacao;
     header("Location: $url");
 }
 
 elseif(isset($_POST['gera_arquivo_debito']))
 {
     $gera_arquivo_debito = $_POST['gera_arquivo_debito'];
-    $url = 'gerador_layout_deb_cef.php?data=' . $data . '&convenio=' . $convenio . '&' . 'optante=1'.'&codigo_de_operacao='.$codigo_de_operacao;
+    $url = 'gerador_layout_deb_cef.php?data=' . $data . '&convenio=' . $convenio . '&' . 'optante=0'.'&codigo_de_operacao='.$codigo_de_operacao;
     header("Location: $url");
 
 }

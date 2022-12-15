@@ -15,14 +15,13 @@ $convenio   = $_GET['convenio'];
 
 $vencimento = date('Y-m-d', strtotime($_GET['data']));
 
-
 if (isset($_GET['convenio'])) {
 	// Busca os dados do convenio
 	$sql = "SELECT * , bancos.nome_banco, bancos.codigo_febraban, convenios_debito_em_conta.banco_id
-                FROM convenios_debito_em_conta 
-                INNER JOIN bancos
-                ON bancos.id = convenios_debito_em_conta.banco_id	
-                WHERE `cod_convenio` = " . $convenio;
+            FROM convenios_debito_em_conta 
+            INNER JOIN bancos
+            ON bancos.id = convenios_debito_em_conta.banco_id	
+            WHERE `cod_convenio` = " . $convenio;
 	$res = $connection->query($sql);
 	$row = $res->fetch_object();
 
@@ -67,59 +66,60 @@ if (isset($_GET['convenio'])) {
 
 			$content .= bradescoDebAuto400LayoutCNAB::Registro0($Registro0) . PHP_EOL;
 
-			// Busca as Parcelas
+			// Busca as parcelas
 			$sql = "SELECT negocio_parcelas.id as parcela,
-                        negocio_parcelas.negocio_id,
-                        negocio_parcelas.documento, 
-                        negocio_parcelas.vencimento,   
-                        negocio_parcelas.valor,   
-                        negocio_parcelas.data_pagamento,  
-                        negocio_parcelas.multa,  
-                        negocio_parcelas.juros,
-                        negocio_parcelas.total, 
-                        negocio_parcelas.pagamento_parcelas,
-                        negocio_parcelas.cod_retorno,  
-                        negocio_parcelas.cod_retorno1,  
-                        negocio_parcelas.cod_retorno2,  
-                        negocio_parcelas.cod_retorno3,
-                        negocio_parcelas.cod_retorno4,
-                        negocio_parcelas.cod_retorno5,  
-                        negocio_parcelas.numero_parcela,   
-                        negocio_parcelas.num_sequencial_arquivo_debito,
-                        negocio_parcelas.numero_registro_e,  
-                        negocio_parcelas.numero_agendamento_cliente,
-                        negocio_parcelas.vencimento_original,
-                        negocio_parcelas.valor_tarifa,
-                        C.id,
-                        C.endereco,
-                        C.numero_endereco,
-                        C.complemento_endereco,
-                        C.bairro,
-                        C.nome,
-                        C.sobrenome,
-                        C.cpf,
-                        C.cep,
-                        C.cidade,  
-                        T.nome_cidade,
-                        U.nome_uf,
-                        V.cod_convenio,
-                        F.dias_antecedencia_cobranca_debito,
-                        D.agencia_bancaria,
-                        D.conta_corrente,
-                        V.mensagem_cliente,
-                        V.codigo_carteira
-                        FROM negocio_parcelas
-                        INNER JOIN negocios as N ON N.id = negocio_id
-                        INNER JOIN clientes as C ON N.cliente_id = C.id
-                        INNER JOIN clientes_dados_debito as D ON N.conta_debito = D.id
-                        LEFT JOIN cidades as T ON T.id = C.cidade
-                        LEFT JOIN ufs as U ON U.id = T.uf_cidade
-                        INNER JOIN forma_pagamento as F ON N.forma_pagamento = F.id
-                        INNER JOIN convenios_debito_em_conta as V ON F.cod_convenio = V.id
-                        WHERE negocio_parcelas.numero_registro_e = 0 AND negocio_parcelas.vencimento <= '$vencimento'";
-			$res3 = $connection->query($sql);
+                    negocio_parcelas.negocio_id,
+                    negocio_parcelas.documento, 
+                    negocio_parcelas.vencimento,   
+                    negocio_parcelas.valor,   
+                	negocio_parcelas.data_pagamento,  
+                    negocio_parcelas.multa,  
+                    negocio_parcelas.juros,
+                    negocio_parcelas.total, 
+                    negocio_parcelas.pagamento_parcelas,
+                    negocio_parcelas.cod_retorno,  
+                    negocio_parcelas.cod_retorno1,  
+                    negocio_parcelas.cod_retorno2,  
+                    negocio_parcelas.cod_retorno3,
+                    negocio_parcelas.cod_retorno4,
+                    negocio_parcelas.cod_retorno5,  
+                    negocio_parcelas.numero_parcela,   
+                    negocio_parcelas.num_sequencial_arquivo_debito,
+                    negocio_parcelas.numero_registro_e,  
+                    negocio_parcelas.numero_agendamento_cliente,
+                    negocio_parcelas.vencimento_original,
+                    negocio_parcelas.valor_tarifa,
+                    C.id,
+                    C.endereco,
+                    C.numero_endereco,
+                    C.complemento_endereco,
+                    C.bairro,
+                	C.nome,
+                    C.sobrenome,
+                    C.cpf,
+                    C.cep,
+                    C.cidade,  
+                    T.nome_cidade,
+                    U.nome_uf,
+                    V.cod_convenio,
+                    F.dias_antecedencia_cobranca_debito,
+                    D.agencia_bancaria,
+                    D.conta_corrente,
+                    V.mensagem_cliente,
+                    V.codigo_carteira
+                    FROM negocio_parcelas
+                    INNER JOIN negocios as N ON N.id = negocio_id
+                    INNER JOIN clientes as C ON N.cliente_id = C.id
+                    INNER JOIN clientes_dados_debito as D ON N.conta_debito = D.id
+                    LEFT JOIN cidades as T ON T.id = C.cidade
+                    LEFT JOIN ufs as U ON U.id = T.uf_cidade
+                    INNER JOIN forma_pagamento as F ON N.forma_pagamento = F.id
+                    INNER JOIN convenios_debito_em_conta as V ON F.cod_convenio = V.id
+					WHERE negocio_parcelas.numero_registro_e = 0 AND negocio_parcelas.vencimento <= '$vencimento' AND V.cod_convenio = $convenio";
+			 $res3 = $connection->query($sql);
 
-			while ($row2 = $res3->fetch_object()) {
+			while ($row2 = $res3->fetch_object())
+			{
 				$converte_cep   = intval($row2->cep);
 				$reg_vencimento = str_replace('-', '', $row2->vencimento);
 
@@ -143,23 +143,23 @@ if (isset($_GET['convenio'])) {
 
 				$formata_vencimento = date('dmy', strtotime($row2->vencimento));
 
-				$Limpa_campo_conta_corrente =   [
-					'A', 'a', 'B', 'b', 'C', 'c',
-					'D', 'd', 'E', 'e', 'F', 'f',
-					'G', 'g', 'H', 'h', 'I', 'i',
-					'J', 'j', 'K', 'k', 'L', 'l',
-					'M', 'm', 'N', 'n', 'O', 'o',
-					'P', 'p', 'Q', 'q', 'R', 'r',
-					'S', 's', 'T', 't', 'U', 'u',
-					'V', 'v', 'W', 'w', 'X', 'x',
-					'Y', 'y', 'Z', 'z'
-				];
+				$limpa_campo_conta_corrente =   [
+													'A', 'a', 'B', 'b', 'C', 'c',
+													'D', 'd', 'E', 'e', 'F', 'f',
+													'G', 'g', 'H', 'h', 'I', 'i',
+													'J', 'j', 'K', 'k', 'L', 'l',
+													'M', 'm', 'N', 'n', 'O', 'o',
+													'P', 'p', 'Q', 'q', 'R', 'r',
+													'S', 's', 'T', 't', 'U', 'u',
+													'V', 'v', 'W', 'w', 'X', 'x',
+													'Y', 'y', 'Z', 'z'
+												];
 
 				// Preenche Array do REGISTRO 1"                    
 				$Registro1["cod_registro1"]                         = 1;
 				$Registro1["agencia_debito"]                        = intval(str_replace(" ", "", $row2->agencia_bancaria));
 				$Registro1["razao_conta_corrente"]                  = 0;
-				$Registro1["conta_corrente"]                        = intval(str_replace($Limpa_campo_conta_corrente, 0, $row2->conta_corrente));
+				$Registro1["conta_corrente"]                        = intval(str_replace($limpa_campo_conta_corrente, 0, $row2->conta_corrente));
 				$Registro1["zero"]                                  = 0;
 				$Registro1["carteira"]                              = $row2->codigo_carteira;
 				$Registro1["agencia"]                               = $agencia;
@@ -247,7 +247,6 @@ if (isset($_GET['convenio'])) {
 
 		default:
 			echo 'Layout não encontrado';
-
 			break;
 	}
 }

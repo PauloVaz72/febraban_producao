@@ -50,7 +50,9 @@
                 $RegistroA["versao_layout"]                 = $row->versao_layout;
                 $RegistroA["identificacao_servico"]         = $row->identificacao_servico;
                 $RegistroA["reservado_futuro"]              = " ";
+                
                 $content  = '';
+                
                 $content .= santanderDebAuto150Layout::RegistroA($RegistroA).PHP_EOL;
                 
                 

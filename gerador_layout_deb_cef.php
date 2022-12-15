@@ -21,16 +21,16 @@
 	{
 		// Busca os dados do convenio
 		$sql = "SELECT * , bancos.nome_banco, bancos.codigo_febraban, convenios_debito_em_conta.banco_id
-			FROM convenios_debito_em_conta 
-			INNER JOIN bancos
-			ON bancos.id = convenios_debito_em_conta.banco_id	
-			WHERE `cod_convenio` = ".$convenio;
+				FROM convenios_debito_em_conta 
+				INNER JOIN bancos
+				ON bancos.id = convenios_debito_em_conta.banco_id	
+				WHERE `cod_convenio` = ".$convenio;
 		$res = $connection->query($sql);
 
-			$row 	   = $res->fetch_object();
-			$cod_banco = $row->codigo_febraban;
-			$convenio  = $row->cod_convenio;	
-			$numero_sequencial_arquivo = $row->numero_sequencial_arquivo  + 1;
+		$row 	   = $res->fetch_object();
+		$cod_banco = $row->codigo_febraban;
+		$convenio  = $row->cod_convenio;	
+		$numero_sequencial_arquivo = $row->numero_sequencial_arquivo  + 1;
 
 		switch($cod_banco)
 		{
@@ -79,7 +79,6 @@
 					
 				
 				// Inicializa variáveis
-				$RegistroE = array();
 				$numero_sequencial_registroE = 0;
 				$soma_valores = 0;
 				
@@ -90,8 +89,9 @@
 					{
 						// Atualiza o numero do registro E na parcela caso não esteja efetuando o cadastro
 						$numero_sequencial_registroE = $numero_sequencial_registroE + 1;
-						// Se for optante gera os valores de débito, se não somente os dados de cadastro
-						if($optante == 1){	
+
+						// Se não for optante gera os valores de débito, se não somente os dados de cadastro
+						if($optante == 0){	
 							// Verifica se a data de vencimento é menor que a data passada no parâmetro, se sim, atualiza o vencimento para o parametro passado
 							if (str_replace('-', '', $row->vencimento) < str_replace('-', '',$vencimento))
 							{
@@ -116,6 +116,7 @@
 						}
 						
 						// Preenche Array do Registro E
+						$RegistroE = array();
 						$RegistroE["cod_registro"]       			= "E";
 						$RegistroE["id_cliente_empresa"] 			= $row->cpf;
 						$RegistroE["agencia_debito"]     			= $row->agencia_bancaria;
@@ -153,7 +154,7 @@
 					fwrite($fp,$content);
 					fclose($fp);
 
-					// header("Location: index_cef.php");
+					header("Location: index_cef.php");
 
 					break;
 

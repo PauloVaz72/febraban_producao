@@ -25,13 +25,13 @@ if(isset($_POST['gera_parcela']))
 elseif(isset($_POST['gera_arquivo_optante']))
 {   
     $gera_arquivo_optante = $_POST['gera_arquivo_optante'];
-    $url = 'gerador_layout_deb_santander.php?data=' . $data . '&convenio=' . $convenio . '&' . 'optante=0';
+    $url = 'gerador_layout_deb_santander.php?data=' . $data . '&convenio=' . $convenio . '&' . 'optante=1';
     header("Location: $url");
 }
 
 elseif(isset($_POST['gera_arquivo_debito']))
 {
     $gera_arquivo_debito = $_POST['gera_arquivo_debito'];
-    $url = 'gerador_layout_deb_santander.php?data=' . $data . '&convenio=' . $convenio . '&' . 'optante=1';
+    $url = 'gerador_layout_deb_santander.php?data=' . $data . '&convenio=' . $convenio . '&' . 'optante=0';
     header("Location: $url");
 }
