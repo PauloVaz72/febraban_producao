@@ -22,6 +22,13 @@ if(isset($_POST['gera_parcela']))
     header("Location: $url");
 }
 
+if(isset($_POST['gera_arquivo_cancelamento']))
+{
+    $gera_arquivo_cancelamento = $_POST['gera_arquivo_cancelamento'];
+    $url = 'gerador_cancela_bradesco.php?data=' . $data . '&convenio=' . $convenio;
+    header("Location: $url");
+}
+
 elseif(isset($_POST['gera_arquivo_debito']))
 {
     $gera_arquivo_debito = $_POST['gera_arquivo_debito'];

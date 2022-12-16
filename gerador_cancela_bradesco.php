@@ -89,6 +89,7 @@ if (isset($_GET['convenio'])) {
                     negocio_parcelas.numero_agendamento_cliente,
                     negocio_parcelas.vencimento_original,
                     negocio_parcelas.valor_tarifa,
+                    negocio_parcelas.status,
                     C.id,
                     C.endereco,
                     C.numero_endereco,
@@ -115,7 +116,7 @@ if (isset($_GET['convenio'])) {
                     LEFT JOIN ufs as U ON U.id = T.uf_cidade
                     INNER JOIN forma_pagamento as F ON N.forma_pagamento = F.id
                     INNER JOIN convenios_debito_em_conta as V ON F.cod_convenio = V.id
-					WHERE negocio_parcelas.numero_registro_e = 0 AND negocio_parcelas.vencimento <= '$vencimento' AND V.cod_convenio = $convenio";
+					WHERE negocio_parcelas.status = 0 AND negocio_parcelas.vencimento = '$vencimento' AND V.cod_convenio = $convenio";
 			 $res3 = $connection->query($sql);
 
 			while ($row2 = $res3->fetch_object())
@@ -178,7 +179,7 @@ if (isset($_GET['convenio'])) {
 				$Registro1["id_rateio_credito"]                     = " ";
 				$Registro1["enderacamento_aviso_deb_auto"]          = 2;
 				$Registro1["quantidade_pagamentos"]                 = " ";
-				$Registro1["id_ocorrencia"]                         = 1;
+				$Registro1["id_ocorrencia"]                         = 02;
 				$Registro1["num_documento"]                         = " ";
 				$Registro1["data_vencimento_titulo"]                = $formata_vencimento;
 				$Registro1["valor_titulo"]                          = $inteiro . $centavos;
@@ -206,25 +207,6 @@ if (isset($_GET['convenio'])) {
 				$contador_registros += 1;
 
 				$content .= bradescoDebAuto400LayoutCNAB::Registro1($Registro1) . PHP_EOL;
-
-				// Preenche Array do REGISTRO 6"
-				$Registro6["cod_registro6"]                         = 6;
-				$Registro6["carteira"]                              = $row->codigo_carteira;
-				$Registro6["agencia_debito"]                        = $agencia;
-				$Registro6["conta_corrente2"]                       = $conta;
-				$Registro6["numero_bradesco"]                       = 0;
-				$Registro6["digito_numero_bradesco"]                = 0;
-				$Registro6["tipo_operacao"]                         = 3;
-				$Registro6["utilizacao_cheque_especial"]            = "N";
-				$Registro6["consulta_saldo_apos_vencimento"]        = "N";
-				$Registro6["num_cod_id_contrato"]                   = $row2->negocio_id;
-				$Registro6["prazo_validade_contrato"]               = 999999999;
-				$Registro6["reservado_futuro_6"]                    = " ";
-				$Registro6["numero_sequencial_registro3"]           = $contador_registros;
-
-				$contador_registros += 1;
-
-				$content .= bradescoDebAuto400LayoutCNAB::Registro6($Registro6) . PHP_EOL;
 			}
 
 			// REGISTRO 9

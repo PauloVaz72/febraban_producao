@@ -165,7 +165,7 @@
                 $RegistroE["valor_debito"]                  = intval($inteiro.$centavos);
                 $RegistroE["cod_moeda"]                     = 03;
                 $RegistroE["uso_instituicao_destinataria"]  = $row2->parcela;
-                $RegistroE["uso_instituicao_destinataria2"]  = "X"; // verificar o id da parcela
+                $RegistroE["uso_instituicao_destinataria2"]  = "X"; 
                 $RegistroE["tipo_identificacao"]            = 2;
                 $RegistroE["identificacao"]                 = $row2->cpf;
                 $RegistroE["tipo_operacao"]                 = 3;

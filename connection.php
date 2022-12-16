@@ -4,7 +4,6 @@ define ('USER','intranetfuturo04');
 define ('PASS','Futuro2022');
 define ('BASE','intranetfuturo04');  
 
-
 // define ('HOST','localhost');
 // define ('USER','root');
 // define ('PASS','16062001');
