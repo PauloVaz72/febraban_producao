@@ -26,7 +26,7 @@
         $res = $connection->query($sql);
         $row = $res->fetch_object();
 
-
+        
         //Inicializa as variáveis
 		$cod_banco = $row->codigo_febraban;
 		$convenio  = $row->cod_convenio;	
@@ -109,7 +109,7 @@
                         INNER JOIN forma_pagamento as F ON N.forma_pagamento = F.id
                         INNER JOIN convenios_debito_em_conta as V ON F.cod_convenio = V.id
                         WHERE negocio_parcelas.numero_registro_e = 0 AND negocio_parcelas.vencimento <= '$vencimento' AND V.cod_convenio = $convenio";
-			$res3 = $connection->query($sql);
+			 $res3 = $connection->query($sql);
             
            
 			$soma_valores = 0;

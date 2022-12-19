@@ -54,7 +54,7 @@ class bradescoCancela400Layout{
     public static function Registro1($cfg)
     {
         //Registro de transação - tipo 1 (conf layout para cobrança)
-        $cod_registro1                                         = isset($cfg['cod_registro1']) ? $cfg['cod_registro1'] : ' ';
+        $cod_registro1                                      = isset($cfg['cod_registro1']) ? $cfg['cod_registro1'] : ' ';
         $agencia_debito                                     = isset($cfg['agencia_debito']) ? $cfg['agencia_debito'] : ' ';
         $razao_conta_corrente                               = isset($cfg['razao_conta_corrente']) ? $cfg['razao_conta_corrente'] : ' ';
         $conta_corrente                                     = isset($cfg['conta_corrente']) ? $cfg['conta_corrente'] : ' ';
@@ -115,8 +115,7 @@ class bradescoCancela400Layout{
         $campos['cod_banco_deb_camara_compensacao']         = array(63, 65, '9:3', $cod_banco_deb_camara_compensacao);
         $campos['campo_multa']                              = array(66, 66, '9:1', $campo_multa);
         $campos['percentual_multa']                         = array(67, 70, '9:4', $percentual_multa);
-        $campos['id_titulo_banco']                          = array(71, 81, '9:11', $id_titulo_banco);
-        $campos['digito_autoconferencia_num_bancario']      = array(82, 82, '9:1', $digito_autoconferencia_num_bancario);
+        $campos['id_titulo_banco']                          = array(71, 82, '9:12', $id_titulo_banco);
         $campos['desconto_bonificacao_dia']                 = array(83, 92, '9:10', $desconto_bonificacao_dia);
         $campos['condicao_emissao_papeleta_cobranca']       = array(93, 93, '9:1', $condicao_emissao_papeleta_cobranca);
         $campos['ident_emite_boleto_deb_auto']              = array(94, 94, 'X:1', $ident_emite_boleto_deb_auto);

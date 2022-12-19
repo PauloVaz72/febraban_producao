@@ -64,7 +64,7 @@ if (isset($_GET['convenio'])) {
 
 			$content  = '';
 
-			$content .= bradescoDebAuto400LayoutCNAB::Registro0($Registro0) . PHP_EOL;
+			$content .= bradescoCancela400Layout::Registro0($Registro0) . PHP_EOL;
 
 			// Busca as parcelas
 			$sql = "SELECT negocio_parcelas.id as parcela,
@@ -170,8 +170,7 @@ if (isset($_GET['convenio'])) {
 				$Registro1["cod_banco_deb_camara_compensacao"]      = 237;
 				$Registro1["campo_multa"]                           = 0;
 				$Registro1["percentual_multa"]                      = 0;
-				$Registro1["id_titulo_banco"]                       = 0;
-				$Registro1["digito_autoconferencia_num_bancario"]   = 0;
+				$Registro1["id_titulo_banco"]                       = intval($row2->documento);
 				$Registro1["desconto_bonificacao_dia"]              = 0;
 				$Registro1["condicao_emissao_papeleta_cobranca"]    = 1;
 				$Registro1["ident_emite_boleto_deb_auto"]           = "N";
@@ -179,7 +178,7 @@ if (isset($_GET['convenio'])) {
 				$Registro1["id_rateio_credito"]                     = " ";
 				$Registro1["enderacamento_aviso_deb_auto"]          = 2;
 				$Registro1["quantidade_pagamentos"]                 = " ";
-				$Registro1["id_ocorrencia"]                         = 02;
+				$Registro1["id_ocorrencia"]                         = 2;
 				$Registro1["num_documento"]                         = " ";
 				$Registro1["data_vencimento_titulo"]                = $formata_vencimento;
 				$Registro1["valor_titulo"]                          = $inteiro . $centavos;
@@ -206,7 +205,7 @@ if (isset($_GET['convenio'])) {
 
 				$contador_registros += 1;
 
-				$content .= bradescoDebAuto400LayoutCNAB::Registro1($Registro1) . PHP_EOL;
+				$content .= bradescoCancela400Layout::Registro1($Registro1) . PHP_EOL;
 			}
 
 			// REGISTRO 9
@@ -215,7 +214,7 @@ if (isset($_GET['convenio'])) {
 			$Registro9["reservado_futuro_9"]       = " ";
 			$Registro9["numero_sequencial_registro3"]  = $contador_registros;
 
-			$content .= bradescoDebAuto400LayoutCNAB::Registro9($Registro9) . PHP_EOL;
+			$content .= bradescoCancela400Layout::Registro9($Registro9) . PHP_EOL;
 
 			//Cria o arquivo
 			$nome_arquivo = "CB" . date('dm') . str_pad($numero_sequencial_arquivo, 2, '0', STR_PAD_LEFT) . ".REM";

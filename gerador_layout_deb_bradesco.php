@@ -118,7 +118,7 @@ if (isset($_GET['convenio'])) {
 					WHERE negocio_parcelas.numero_registro_e = 0 AND negocio_parcelas.vencimento <= '$vencimento' AND V.cod_convenio = $convenio";
 			 $res3 = $connection->query($sql);
 
-			while ($row2 = $res3->fetch_object())
+			while($row2 = $res3->fetch_object())
 			{
 				$converte_cep   = intval($row2->cep);
 				$reg_vencimento = str_replace('-', '', $row2->vencimento);
@@ -134,7 +134,6 @@ if (isset($_GET['convenio'])) {
 
 				$sql  = "UPDATE `negocio_parcelas` SET `numero_registro_e` = " . $contador_registros . ", vencimento = " . $data_vencimento . ",`num_sequencial_arquivo_debito` = " . $numero_sequencial_arquivo . " WHERE `negocio_id` = " . $row2->negocio_id;
 				$res4 = $connection->query($sql);
-
 
 				// Soma e Formata o valor da parcela
 				$soma_valores = $soma_valores + $row2->total;
@@ -169,8 +168,7 @@ if (isset($_GET['convenio'])) {
 				$Registro1["cod_banco_deb_camara_compensacao"]      = 237;
 				$Registro1["campo_multa"]                           = 0;
 				$Registro1["percentual_multa"]                      = 0;
-				$Registro1["id_titulo_banco"]                       = 0;
-				$Registro1["digito_autoconferencia_num_bancario"]   = 0;
+				$Registro1["id_titulo_banco"]                       = intval($row2->documento);
 				$Registro1["desconto_bonificacao_dia"]              = 0;
 				$Registro1["condicao_emissao_papeleta_cobranca"]    = 1;
 				$Registro1["ident_emite_boleto_deb_auto"]           = "N";
