@@ -70,9 +70,9 @@ class bbDebAuto150Layout{
         $campos['id_cliente_depositaria']       = array(31,50,'X:20',$id_cliente_depositaria);
         $campos['prazo_validade_contrato']      = array(51,58,'9:8',$prazo_validade_contrato);
         $campos['valor_debito']                 = array(59,73,'9:15',$valor_debito);
-        $campos['cod_moeda']                    = array(74,75,'X:2',$cod_moeda);
+        $campos['cod_moeda']                    = array(74,75,'9:2',$cod_moeda);
         $campos['uso_instituicao_destinataria'] = array(76,128,'X:53',$uso_instituicao_destinataria);
-        $campos['uso_instituicao_destinataria2'] = array(129,129,'X:1',$uso_instituicao_destinataria2);
+        $campos['uso_instituicao_destinataria2']= array(129,129,'X:1',$uso_instituicao_destinataria2);
         $campos['tipo_identificacao']           = array(130,130,'9:1',$tipo_identificacao);
         $campos['identificacao']                = array(131,145,'9:15',$identificacao);
         $campos['tipo_operacao']                = array(146,146,'9:1',$tipo_operacao);

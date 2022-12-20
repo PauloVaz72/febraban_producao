@@ -15,6 +15,8 @@ $convenio   = $_GET['convenio'];
 
 $vencimento = date('Y-m-d', strtotime($_GET['data']));
 
+$vendedor = $_GET['vendedor'];
+
 if (isset($_GET['convenio'])) {
 	// Busca os dados do convenio
 	$sql = "SELECT * , bancos.nome_banco, bancos.codigo_febraban, convenios_debito_em_conta.banco_id
@@ -66,6 +68,8 @@ if (isset($_GET['convenio'])) {
 
 			$content .= bradescoCancela400Layout::Registro0($Registro0) . PHP_EOL;
 
+			$condicao = !empty($vendedor) ? "AND N.vendedor_id = $vendedor" :  " ";
+
 			// Busca as parcelas
 			$sql = "SELECT negocio_parcelas.id as parcela,
                     negocio_parcelas.negocio_id,
@@ -116,7 +120,7 @@ if (isset($_GET['convenio'])) {
                     LEFT JOIN ufs as U ON U.id = T.uf_cidade
                     INNER JOIN forma_pagamento as F ON N.forma_pagamento = F.id
                     INNER JOIN convenios_debito_em_conta as V ON F.cod_convenio = V.id
-					WHERE negocio_parcelas.status = 0 AND negocio_parcelas.vencimento = '$vencimento' AND V.cod_convenio = $convenio";
+					WHERE negocio_parcelas.status = 0 AND negocio_parcelas.vencimento = '$vencimento' AND V.cod_convenio = $convenio $condicao";
 			 $res3 = $connection->query($sql);
 
 			while ($row2 = $res3->fetch_object())

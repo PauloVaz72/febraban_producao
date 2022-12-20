@@ -8,13 +8,14 @@
     // Pegando a data informada por parâmetro
     $data = $_GET['data'];
 
+    $vendedor = $_GET['vendedor'];
+
     $arruma_data = explode('-',$data);
         
     $dia         = $arruma_data[2];
     $mes         = $arruma_data[1];
     $ano         = $arruma_data[0];
         
-    // Passando por parâmetro cod do convênio
     $convenio = $_GET['convenio'];
         
     if(isset($_GET['convenio']))
@@ -36,6 +37,8 @@
             // Gera parcelas
             while($dia >= 1)
             {
+                $condicao = !empty($vendedor) ? "AND N.vendedor_id = $vendedor" :  " ";
+                
                 // Consulta negócio pelo dia da data informada, status e convênio
                 $sql = "SELECT N.id AS negocio,
                         N.dia_debito AS dia_debito,
@@ -52,9 +55,9 @@
                         INNER JOIN convenios_debito_em_conta AS C ON F.cod_convenio = C.id
                         INNER JOIN clientes_dados_debito AS D ON D.cliente_id = N.cliente_id
                         INNER JOIN bancos AS B ON D.banco_id = B.id
-                        WHERE N.dia_debito = $dia AND N.status_negocio = 1 AND C.cod_convenio = $convenio";
+                        WHERE N.dia_debito = $dia AND N.status_negocio = 1 AND C.cod_convenio = $convenio $condicao";
                 $res2 = $connection->query($sql);
-               
+
                 while($row2 = $res2->fetch_object())
                 {  
                     $dia_data_original = $row2->dia_debito;
@@ -87,7 +90,6 @@
                                      VALUES ($row2->negocio, '$data', $row2->valor_total, $row2->valor_total, $numero_parcelas, '$data_original', 
                                     '$row2->agencia_bancaria', '$row2->banco', '$row2->conta_corrente', '$row2->cod_operacao', 1)";
                             $res4 = $connection->query($sql);
-
                         }
                     }
                 }
@@ -97,6 +99,5 @@
         }
     }
     
-     header("Location: index_bradesco.php");
-
+     header("Location: index_bradesco.php");   
 ?>

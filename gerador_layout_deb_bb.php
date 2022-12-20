@@ -82,6 +82,7 @@
                         negocio_parcelas.numero_agendamento_cliente,
                         negocio_parcelas.vencimento_original,
                         negocio_parcelas.valor_tarifa,
+                        negocio_parcelas.status,
                         C.id,
                         C.endereco,
                         C.numero_endereco,
@@ -108,16 +109,15 @@
                         LEFT JOIN ufs as U ON U.id = T.uf_cidade
                         INNER JOIN forma_pagamento as F ON N.forma_pagamento = F.id
                         INNER JOIN convenios_debito_em_conta as V ON F.cod_convenio = V.id
-                        WHERE negocio_parcelas.numero_registro_e = 0 AND negocio_parcelas.vencimento <= '$vencimento' AND V.cod_convenio = $convenio";
+                        WHERE negocio_parcelas.numero_registro_e = 0 AND negocio_parcelas.vencimento <= '$vencimento' AND V.cod_convenio = $convenio AND negocio_parcelas.status = 1";
 			 $res3 = $connection->query($sql);
-            
            
 			$soma_valores = 0;
             
             while ($row2 = $res3->fetch_object())
             {
                if($optante == 0)
-               {	
+               {
                    // Verifica se a data de vencimento é menor que a data passada no parâmetro, se sim, atualiza o vencimento para o parametro passado
                    if (str_replace('-', '', $row2->vencimento) < str_replace('-', '', $vencimento))
                    {
@@ -161,11 +161,11 @@
                 $RegistroE["id_cliente_destinataria"]       = $row2->cpf;
                 $RegistroE["agencia_debito"]                = $row2->agencia_bancaria;
                 $RegistroE["id_cliente_depositaria"]        = intval(str_replace($limpa_campo_conta_corrente, 0, $row2->conta_corrente));
-                $RegistroE["prazo_validade_contrato"]       = 99999999;
+                $RegistroE["prazo_validade_contrato"]       = $data_vencimento;
                 $RegistroE["valor_debito"]                  = intval($inteiro.$centavos);
                 $RegistroE["cod_moeda"]                     = 03;
                 $RegistroE["uso_instituicao_destinataria"]  = $row2->parcela;
-                $RegistroE["uso_instituicao_destinataria2"]  = "X"; 
+                $RegistroE["uso_instituicao_destinataria2"] = "X"; 
                 $RegistroE["tipo_identificacao"]            = 2;
                 $RegistroE["identificacao"]                 = $row2->cpf;
                 $RegistroE["tipo_operacao"]                 = 3;
@@ -179,7 +179,7 @@
                 } else {
                     $RegistroE["cod_movimento"]        =  5;
                 }
-                
+              
                 $contador_registros += +1;
 
                 $content .= bbDebAuto150Layout::RegistroE($RegistroE).PHP_EOL;

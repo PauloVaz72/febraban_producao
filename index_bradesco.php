@@ -30,6 +30,10 @@
                         <input type="text" class="form-control" name="convenio">
                     </div>
                     <div class="row mb-3">
+                    <label class="form-label" for="data">Id do vendedor: </label>
+                        <input type="text" class="form-control" name="vendedor">
+                    </div>
+                    <div class="row mb-3">
                         <button class="btn btn-primary" type="submit" name="gera_parcela" value="1">Gerar parcelas</button>
                     </div>
                     <div class="row mb-3">

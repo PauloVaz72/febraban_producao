@@ -15,25 +15,30 @@ if(isset($_POST['convenio']))
     $convenio = $_POST['convenio'];
 }
 
+if(isset($_POST['vendedor']))
+{
+    $vendedor = $_POST['vendedor'];
+}
+
 if(isset($_POST['gera_parcela']))
 {
     $gera_parcela = $_POST['gera_parcela'];
-    $url = 'gerador_parcela_bradesco.php?data=' . $data . '&convenio=' . $convenio;
+    $url = 'gerador_parcela_bradesco.php?data=' . $data . '&convenio=' . $convenio . '&vendedor=' . $vendedor;
     header("Location: $url");
 }
 
 if(isset($_POST['gera_arquivo_cancelamento']))
 {
     $gera_arquivo_cancelamento = $_POST['gera_arquivo_cancelamento'];
-    $url = 'gerador_cancela_bradesco.php?data=' . $data . '&convenio=' . $convenio;
+    $url = 'gerador_cancela_bradesco.php?data=' . $data . '&convenio=' . $convenio . '&vendedor=' . $vendedor;
     header("Location: $url");
 }
 
 elseif(isset($_POST['gera_arquivo_debito']))
 {
     $gera_arquivo_debito = $_POST['gera_arquivo_debito'];
-    $url = 'gerador_layout_deb_bradesco.php?data=' . $data . '&convenio=' . $convenio;
+    $url = 'gerador_layout_deb_bradesco.php?data=' . $data . '&convenio=' . $convenio . '&vendedor=' . $vendedor;
     header("Location: $url");
-
 }
+
 
