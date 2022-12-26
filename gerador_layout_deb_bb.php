@@ -137,7 +137,13 @@
 				    $formata_vencimento = date('dmy', strtotime($row2->vencimento));
                    
                } else {
-                   $data_vencimento = '00000000';
+                   // Verifica se a data de vencimento é menor que a data passada no parâmetro, se sim, atualiza o vencimento para o parametro passado
+                   if (str_replace('-', '', $row2->vencimento) < str_replace('-', '', $vencimento))
+                   {
+                       $data_vencimento = str_replace('-', '', $vencimento);
+                   } else {
+                       $data_vencimento = str_replace('-', '', $row2->vencimento);
+                   }      
                    $soma_valores    = 0;
                    $inteiro         = 0;
                    $centavos        = '00';
